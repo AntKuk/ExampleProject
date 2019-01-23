@@ -1,0 +1,10 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.0//EN"
+        "http://gwtproject.org/doctype/2.8.1/gwt-module.dtd">
+<module>
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="org.fusesource.restygwt.RestyGWT"/>
+    <inherits name="com.exampleproject.model.Model"/>
+    <!-- Specify the app entry point class.                   -->
+    <entry-point class='com.exampleproject.gwt.startpoint.client.StartPoint'/>
+</module>
