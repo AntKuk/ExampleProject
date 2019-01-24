@@ -12,12 +12,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.*;
 
 import com.exampleproject.model.shared.TestDto;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import org.fusesource.restygwt.client.Defaults;
 import org.fusesource.restygwt.client.Method;
@@ -63,7 +60,6 @@ public class StartPoint implements EntryPoint {
      * This is the entry point method.
      */
     public void onModuleLoad() {
-
 
         CompaniesPresenter companiesPresenter = GWT.create(CompaniesPresenter.class);
         CellTable<Company> cellTable = companiesPresenter.getCellTable();
@@ -143,6 +139,7 @@ public class StartPoint implements EntryPoint {
 
 
         RootPanel.get().add(mainPage.getElement());
+
 
 
 

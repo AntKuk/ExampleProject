@@ -24,9 +24,14 @@ public class AddBankView {
     private DialogBox dialogBox;
 
 
-
     public AddBankView() {
         dialogBox = uiBinder.createAndBindUi(this);
+
+        dialogBox.setText("Adding bank");
+        dialogBox.setAnimationEnabled(true);
+        dialogBox.setGlassEnabled(true);
+        dialogBox.center();
+
         dialogBox.show();
     }
 
