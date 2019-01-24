@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+
+        <g:DialogBox>
+            <g:HTMLPanel>
+                <g:Label>Bank name</g:Label>
+                <g:TextBox ui:field="bankName"/>
+                <g:Label>Bank adress</g:Label>
+                <g:TextBox ui:field="bankAdress"/>
+                <g:Button ui:field="ok">Ok</g:Button>
+                <g:Button ui:field="cancel">Cancel</g:Button>
+            </g:HTMLPanel>
+        </g:DialogBox>
+
+
+
+
+
+</ui:UiBinder>

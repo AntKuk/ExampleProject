@@ -21,6 +21,7 @@ public class BanksPresenter {
     @UiField
     Button addButton;
 
+
     private VerticalPanel root;
 
     public BanksPresenter() {
@@ -37,7 +38,7 @@ public class BanksPresenter {
 
     @UiHandler("addButton")
     void addBtn(ClickEvent event) {
-        Window.alert("You clicked Add button");
+        new AddBankView();
     }
 
 }
