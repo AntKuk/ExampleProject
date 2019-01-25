@@ -1,26 +1,39 @@
-package com.exampleproject.model.shared;
+package com.exampleproject.web.rest;
 
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
+import javax.persistence.*;
 import java.math.BigInteger;
-@Component
-@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-public class CompanyDto {
-    private int id;
+
+@Entity
+@Table(name="company")
+public class Company {
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "company_id_Sequence")
+    @SequenceGenerator(name = "company_id_Sequence", sequenceName = "company_seq", allocationSize=1)
+    @Column(name = "idcom", nullable = false)
+    private BigInteger id;
+
+    @Column(name = "comname", nullable = false)
     private String companyName;
+
+    @Column(name = "addr", nullable = false)
     private String address;
+
+    @Column(name = "tin", nullable = false)
     private int tin;
+
+    @Column(name = "iec", nullable = false)
     private int iec;
+
+    @Column(name = "tel", nullable = false)
     private int telNumber;
+
+    @Column(name = "email", nullable = false)
     private String email;
 
-    public CompanyDto() {
+    public Company() {
     }
 
-    public CompanyDto(int id, String companyName, String address, int tin, int iec, int telNumber, String email) {
-        this.id = id;
+    public Company(String companyName, String address, int tin, int iec, int telNumber, String email) {
         this.companyName = companyName;
         this.address = address;
         this.tin = tin;
@@ -29,11 +42,11 @@ public class CompanyDto {
         this.email = email;
     }
 
-    public int getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
@@ -87,8 +100,8 @@ public class CompanyDto {
 
     @Override
     public String toString() {
-        return "CompanyDto{" +
-                "id=" + id +
+        return "Company{" +
+                "idCom=" + id +
                 ", companyName='" + companyName + '\'' +
                 ", address='" + address + '\'' +
                 ", tin=" + tin +

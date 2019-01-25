@@ -1,12 +1,17 @@
 package com.exampleproject.gwt.startpoint.client.pages.company;
 
+import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.model.shared.CompanyDto;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.fusesource.restygwt.client.Defaults;
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +20,8 @@ import java.util.List;
 public class CompaniesPresenter {
     interface MyUiBinder extends UiBinder<VerticalPanel, CompaniesPresenter> {}
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
+
+    private final WorkerClient client = GWT.create(WorkerClient.class);
 
     private VerticalPanel root;
 
@@ -34,6 +41,19 @@ public class CompaniesPresenter {
 
         root = uiBinder.createAndBindUi(this);
         initTable();
+        Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
+        client.getAll(new MethodCallback<List<CompanyDto>>() {
+            @Override
+            public void onFailure(Method method, Throwable exception) {
+                Window.alert(exception.toString() + "\n" + exception.getMessage());
+            }
+
+            @Override
+            public void onSuccess(Method method, List<CompanyDto> companyDto) {
+
+                cellTable.setRowData(companyDto);
+            }
+        });
 
     }
 

@@ -63,6 +63,7 @@ public class StartPoint implements EntryPoint {
 
         MainPage mainPage = GWT.create(MainPage.class);
 
+
         //CompaniesPresenter companiesPresenter = GWT.create(CompaniesPresenter.class);
 /*        CellTable<Company> cellTable = companiesPresenter.getCellTable();
         TextColumn<Company> companyName = new TextColumn<Company>() {
