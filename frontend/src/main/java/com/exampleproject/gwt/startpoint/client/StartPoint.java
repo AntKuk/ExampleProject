@@ -31,7 +31,7 @@ public class StartPoint implements EntryPoint {
     private final WorkerClient client = GWT.create(WorkerClient.class);
 
     private static final String HELLO_MESSAGE = "Hi, I'm your gwt application!";
-
+/*
     //Test class
     private static class Company {
         private final String address;
@@ -55,14 +55,16 @@ public class StartPoint implements EntryPoint {
             "Zander", "94 Road Street"));
 
 
-
+*/
     /**
      * This is the entry point method.
      */
     public void onModuleLoad() {
 
-        CompaniesPresenter companiesPresenter = GWT.create(CompaniesPresenter.class);
-        CellTable<Company> cellTable = companiesPresenter.getCellTable();
+        MainPage mainPage = GWT.create(MainPage.class);
+
+        //CompaniesPresenter companiesPresenter = GWT.create(CompaniesPresenter.class);
+/*        CellTable<Company> cellTable = companiesPresenter.getCellTable();
         TextColumn<Company> companyName = new TextColumn<Company>() {
             @Override
             public String getValue(Company company) {
@@ -90,14 +92,14 @@ public class StartPoint implements EntryPoint {
         for (Company company : companies) {
             list.add(company);
         }
-
+*/
         //RootPanel.get().add(presenter.getElement());
 
-        BanksPresenter banksPresenter = GWT.create(BanksPresenter.class);
-        TransactionsPresenter transactionsPresenter = GWT.create(TransactionsPresenter.class);
-        MainPage mainPage = GWT.create(MainPage.class);
-        mainPage.getSimplePanel().add(companiesPresenter.getElement());
+        //BanksPresenter banksPresenter = GWT.create(BanksPresenter.class);
+        //TransactionsPresenter transactionsPresenter = GWT.create(TransactionsPresenter.class);
 
+        //mainPage.getSimplePanel().add(companiesPresenter.getElement());
+/*
         //Adding Buttons Handlers
         mainPage.getBanksBtn().addClickHandler(new ClickHandler() {
             @Override
@@ -133,7 +135,7 @@ public class StartPoint implements EntryPoint {
         });
 
 
-
+*/
 
 
 
