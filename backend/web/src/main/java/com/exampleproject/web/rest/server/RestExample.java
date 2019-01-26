@@ -8,9 +8,11 @@ import com.exampleproject.web.rest.CompanyDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,10 +81,21 @@ public class RestExample {
 
             listDTO.add(companyDto);
         }
-
-
-
         return listDTO;
+    }
+
+    @RequestMapping("/add")
+    public void add(@RequestBody CompanyDto companyDto) {
+        Company company = new Company();
+        //company.setId(BigInteger.valueOf(companyDto.getId()));
+        company.setCompanyName(companyDto.getCompanyName());
+        company.setAddress(companyDto.getAddress());
+        company.setIec(companyDto.getIec());
+        company.setTin(companyDto.getTin());
+        company.setEmail(companyDto.getEmail());
+        company.setTelNumber(companyDto.getTelNumber());
+
+        companyDAO.add(company);
     }
 
 }

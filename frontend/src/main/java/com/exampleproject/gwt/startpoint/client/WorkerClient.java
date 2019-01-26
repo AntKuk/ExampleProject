@@ -9,6 +9,7 @@ import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import java.util.List;
 
@@ -26,6 +27,10 @@ public interface WorkerClient extends RestService {
 	@GET
 	@Path("/company")
 	void getAll(MethodCallback<List<CompanyDto>> callback);
+
+	@POST
+    @Path("/add")
+    void add(CompanyDto companyDto, MethodCallback<Boolean> callback);
 
 
 

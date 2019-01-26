@@ -3,11 +3,14 @@ package com.exampleproject.gwt.startpoint.client.pages.company;
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.model.shared.CompanyDto;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import org.fusesource.restygwt.client.Defaults;
 import org.fusesource.restygwt.client.Method;
@@ -27,6 +30,13 @@ public class CompaniesPresenter {
 
     @UiField
     CellTable cellTable;
+    @UiField
+    Button addButton;
+
+    @UiHandler("addButton")
+    void addBtn(ClickEvent event) {
+        new AddCompanyView();
+    }
 
     private TextColumn<CompanyDto> idColumn;
     private TextColumn<CompanyDto> nameColumn;

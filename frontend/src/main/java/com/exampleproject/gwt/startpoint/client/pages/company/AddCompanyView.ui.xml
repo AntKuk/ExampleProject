@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <g:DialogBox >
+        <g:HTMLPanel>
+            <g:Label>Company name</g:Label>
+            <g:TextBox ui:field="companyName"/>
+            <g:Label>Company address</g:Label>
+            <g:TextBox ui:field="companyAddress"/>
+            <g:Label>IEC</g:Label>
+            <g:TextBox ui:field="iec"/>
+            <g:Label>TIN</g:Label>
+            <g:TextBox ui:field="tin"/>
+            <g:Label>Email</g:Label>
+            <g:TextBox ui:field="email"/>
+            <g:Label>Tel</g:Label>
+            <g:TextBox ui:field="tel"/>
+
+            <g:Button ui:field="ok">Ok</g:Button>
+            <g:Button ui:field="cancel">Cancel</g:Button>
+        </g:HTMLPanel>
+    </g:DialogBox>
+
+</ui:UiBinder>
