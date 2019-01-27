@@ -143,14 +143,6 @@ public class StartPoint implements EntryPoint {
 
         RootPanel.get().add(mainPage.getElement());
 
-
-
-
-
-
-
-
-
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
 
         Button send = new Button("Send");

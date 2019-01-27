@@ -1,4 +1,4 @@
-package com.exampleproject.web.rest;
+package com.exampleproject.web.rest.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

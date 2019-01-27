@@ -1,4 +1,4 @@
-package com.exampleproject.web.rest;
+package com.exampleproject.web.rest.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -1,5 +1,6 @@
-package com.exampleproject.web.rest;
+package com.exampleproject.web.rest.dao;
 
+import com.exampleproject.web.rest.entity.Company;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Repository("companyDAO")
 @Transactional
-public class CompanyDAO extends BasicDAO {
+public class CompanyDAO extends BasicDAO implements Dao<Company> {
 /*
     public List<Company> getAllCompanies() {
         Criteria criteria = getSession().createCriteria(Company.class);
@@ -42,4 +43,6 @@ public class CompanyDAO extends BasicDAO {
         query.setInteger("id",id);
         return query.executeUpdate();
     }
+
+
 }

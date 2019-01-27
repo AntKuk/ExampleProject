@@ -1,11 +1,11 @@
-package com.exampleproject.web.rest;
+package com.exampleproject.web.rest.entity;
 
 import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
 @Table(name="company")
-public class Company {
+public class Company implements BasicEntity{
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "company_id_Sequence")
     @SequenceGenerator(name = "company_id_Sequence", sequenceName = "company_seq", allocationSize=1)

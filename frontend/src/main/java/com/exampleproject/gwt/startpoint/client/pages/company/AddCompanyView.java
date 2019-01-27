@@ -16,6 +16,8 @@ import org.fusesource.restygwt.client.Defaults;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
+import java.util.List;
+
 public class AddCompanyView {
     interface MyUiBinder extends UiBinder<DialogBox, AddCompanyView> {}
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
@@ -41,10 +43,12 @@ public class AddCompanyView {
 
 
     private DialogBox dialogBox;
+    private CompaniesPresenter companiesPresenter;
 
 
-    public AddCompanyView() {
+    public AddCompanyView(CompaniesPresenter companiesPresenter) {
         dialogBox = uiBinder.createAndBindUi(this);
+        this.companiesPresenter = companiesPresenter;
 
         dialogBox.setText("Adding company");
         dialogBox.setAnimationEnabled(true);
@@ -63,7 +67,36 @@ public class AddCompanyView {
     void add(ClickEvent event) {
         final WorkerClient client = GWT.create(WorkerClient.class);
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
+        CompanyDto companyDto = createDto();
+        client.add(companyDto, new MethodCallback<Boolean>() {
+            @Override
+            public void onFailure(Method method, Throwable exception) {
+                Window.alert(exception.toString() + "\n" + exception.getMessage());
+            }
 
+            @Override
+            public void onSuccess(Method method, Boolean aBoolean) {
+                dialogBox.hide();
+                Window.alert("Added");
+                client.getAllCompanies(new MethodCallback<List<CompanyDto>>() {
+                    @Override
+                    public void onFailure(Method method, Throwable exception) {
+                        Window.alert(exception.toString() + "\n" + exception.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(Method method, List<CompanyDto> companyDtos) {
+                        companiesPresenter.getCellTable().setRowData(companyDtos);
+                    }
+                });
+
+            }
+        });
+
+
+    }
+
+    private CompanyDto createDto() {
         CompanyDto companyDto = new CompanyDto();
         companyDto.setCompanyName(companyName.getText());
         companyDto.setAddress(companyAddress.getText());
@@ -73,17 +106,7 @@ public class AddCompanyView {
         companyDto.setTelNumber(Integer.parseInt(tel.getText()));
         companyDto.setId(0);
 
-        client.add(companyDto, new MethodCallback<Boolean>() {
-            @Override
-            public void onFailure(Method method, Throwable exception) {
-                Window.alert(exception.toString() + "\n" + exception.getMessage());
-            }
-
-            @Override
-            public void onSuccess(Method method, Boolean aBoolean) {
-                Window.alert("Added");
-            }
-        });
+        return companyDto;
     }
 
 }

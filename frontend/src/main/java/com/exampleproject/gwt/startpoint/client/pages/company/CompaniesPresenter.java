@@ -35,7 +35,7 @@ public class CompaniesPresenter {
 
     @UiHandler("addButton")
     void addBtn(ClickEvent event) {
-        new AddCompanyView();
+        new AddCompanyView(this);
     }
 
     private TextColumn<CompanyDto> idColumn;
@@ -52,7 +52,7 @@ public class CompaniesPresenter {
         root = uiBinder.createAndBindUi(this);
         initTable();
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
-        client.getAll(new MethodCallback<List<CompanyDto>>() {
+        client.getAllCompanies(new MethodCallback<List<CompanyDto>>() {
             @Override
             public void onFailure(Method method, Throwable exception) {
                 Window.alert(exception.toString() + "\n" + exception.getMessage());

@@ -1,33 +1,46 @@
 package com.exampleproject.web.rest.server;
 
-import com.exampleproject.engine.DataBaseTest;
+import com.exampleproject.model.shared.BankDto;
+import com.exampleproject.model.shared.BasicDto;
 import com.exampleproject.model.shared.CompanyDto;
 import com.exampleproject.model.shared.TestDto;
-import com.exampleproject.web.rest.Company;
-import com.exampleproject.web.rest.CompanyDAO;
+import com.exampleproject.web.rest.entity.Bank;
+import com.exampleproject.web.rest.service.BankService;
+import com.exampleproject.web.rest.service.CompanyService;
+import com.exampleproject.web.rest.service.ServiceDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class RestExample {
 
     private final ApplicationContext applicationContext;
-    private final DataBaseTest dataBaseTest;
-    private final CompanyDAO companyDAO;
-
+    //private final DataBaseTest dataBaseTest;
+    //private final CompanyDAO companyDAO;
+    private final Map<String, ServiceDB<? extends BasicDto>> dtoMap;
+/*
     @Autowired
     public RestExample(ApplicationContext applicationContext, DataBaseTest dataBaseTest, CompanyDAO companyDAO) {
         this.applicationContext = applicationContext;
         this.dataBaseTest = dataBaseTest;
         this.companyDAO = companyDAO;
+    }
+*/
+
+
+    @Autowired
+    public RestExample(ApplicationContext applicationContext,  List<ServiceDB<? extends BasicDto>> dtoList) {
+        this.applicationContext = applicationContext;
+        this.dtoMap = new HashMap<String, ServiceDB<? extends BasicDto>>(dtoList.size());
+
+        for (ServiceDB<? extends BasicDto> dto : dtoList) {
+            dtoMap.put(dto.getEntityName(), dto);
+        }
     }
 
     @RequestMapping("/test")
@@ -36,7 +49,7 @@ public class RestExample {
         dto.setMessage("It's a test string from server");
         return dto;
     }
-
+/*
     @RequestMapping("/testDb")
     public boolean testDB() {
         try {
@@ -46,7 +59,7 @@ public class RestExample {
         }
         return true;
     }
-
+*/
     @RequestMapping("/test/{someText}")
     public TestDto testAdditional(@PathVariable String someText) {
         TestDto dto = createDto();
@@ -61,7 +74,7 @@ public class RestExample {
     protected CompanyDto createMyDto() {
         return applicationContext.getBean(CompanyDto.class);
     }
-
+/*
     @RequestMapping("/company")
     public List<CompanyDto> getDto() {
 
@@ -96,6 +109,25 @@ public class RestExample {
         company.setTelNumber(companyDto.getTelNumber());
 
         companyDAO.add(company);
+    }
+*/
+
+    @GetMapping(value = "/{entity}", produces = "application/json")
+    public List<? extends BasicDto> getAll(@PathVariable("entity") String entity) {
+        ServiceDB<? extends BasicDto> service = dtoMap.get(entity);
+        return service.getAll();
+    }
+
+    @PostMapping(value = "/Bank", consumes = "application/json", produces = "application/json")
+    public void addBank(@RequestBody BankDto entity) {
+        ServiceDB<BankDto> service = (BankService) dtoMap.get(entity);
+        service.add(entity);
+    }
+
+    @RequestMapping(value = "/addCompany", consumes = "application/json")
+    public void addCompany(@RequestBody CompanyDto entity) {
+        ServiceDB<CompanyDto> service = (CompanyService) dtoMap.get("Company");
+        service.add(entity);
     }
 
 }

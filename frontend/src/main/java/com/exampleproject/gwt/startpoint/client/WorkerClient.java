@@ -2,6 +2,7 @@ package com.exampleproject.gwt.startpoint.client;
 
 
 
+import com.exampleproject.model.shared.BankDto;
 import com.exampleproject.model.shared.CompanyDto;
 import com.exampleproject.model.shared.TestDto;
 import jdk.nashorn.internal.objects.annotations.Getter;
@@ -25,11 +26,17 @@ public interface WorkerClient extends RestService {
 	void getDb(MethodCallback<Boolean> callback);
 
 	@GET
-	@Path("/company")
-	void getAll(MethodCallback<List<CompanyDto>> callback);
+	@Path("/Company")
+	void getAllCompanies(MethodCallback<List<CompanyDto>> callback);
+
+	@GET
+	@Path("/Bank")
+	void getAllBanks(MethodCallback<List<BankDto>> callback);
+
+
 
 	@POST
-    @Path("/add")
+    @Path("/addCompany")
     void add(CompanyDto companyDto, MethodCallback<Boolean> callback);
 
 
