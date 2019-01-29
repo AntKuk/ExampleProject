@@ -1,10 +1,10 @@
 package com.exampleproject.gwt.startpoint.client.pages.bank;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
+import com.exampleproject.gwt.startpoint.client.presenter.TabPresenter;
 import com.exampleproject.model.shared.BankDto;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -19,7 +19,7 @@ import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.List;
 
-public class BanksPresenter {
+public class BanksPresenter implements TabPresenter {
     interface MyUiBinder extends UiBinder<VerticalPanel, BanksPresenter> {}
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 

@@ -1,7 +1,9 @@
 package com.exampleproject.gwt.startpoint.client.pages.main;
 
+import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.gwt.startpoint.client.pages.bank.BanksPresenter;
 import com.exampleproject.gwt.startpoint.client.pages.company.CompaniesPresenter;
+import com.exampleproject.gwt.startpoint.client.pages.handler.MenuBtnHandler;
 import com.exampleproject.gwt.startpoint.client.pages.transaction.TransactionsPresenter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -23,13 +25,13 @@ public class MainPage {
     Button banksBtn;
     @UiField
     Button transactionsBtn;
-
     @UiField
     SimplePanel simplePanel;
 
     private CompaniesPresenter companiesPresenter;
     private BanksPresenter banksPresenter;
     private TransactionsPresenter transactionsPresenter;
+    private WorkerClient client;
 
     public MainPage() {
         root = uiBinder.createAndBindUi(this);
@@ -37,7 +39,6 @@ public class MainPage {
         banksPresenter = GWT.create(BanksPresenter.class);
         transactionsPresenter = GWT.create(TransactionsPresenter.class);
         addButtonHandlers();
-
     }
 
     public SimplePanel getSimplePanel() {
@@ -61,38 +62,8 @@ public class MainPage {
     }
 
     private void addButtonHandlers() {
-        //Adding Buttons Handlers
-        banksBtn.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                Widget widget = simplePanel.getWidget();
-                if(widget != null) {
-                    simplePanel.remove(widget);
-                }
-                simplePanel.add(banksPresenter.getElement());
-            }
-        });
-
-        transactionsBtn.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                Widget widget = simplePanel.getWidget();
-                if(widget != null) {
-                    simplePanel.remove(widget);
-                }
-                simplePanel.add(transactionsPresenter.getElement());
-            }
-        });
-
-        companiesBtn.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                Widget widget = simplePanel.getWidget();
-                if(widget != null) {
-                    simplePanel.remove(widget);
-                }
-                simplePanel.add(companiesPresenter.getElement());
-            }
-        });
+        banksBtn.addClickHandler(new MenuBtnHandler(this, banksPresenter));
+        transactionsBtn.addClickHandler(new MenuBtnHandler(this, transactionsPresenter));
+        companiesBtn.addClickHandler(new MenuBtnHandler(this, companiesPresenter));
     }
 }

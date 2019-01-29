@@ -1,12 +1,13 @@
 package com.exampleproject.gwt.startpoint.client.pages.transaction;
 
+import com.exampleproject.gwt.startpoint.client.presenter.TabPresenter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class TransactionsPresenter {
+public class TransactionsPresenter implements TabPresenter {
     interface MyUiBinder extends UiBinder<VerticalPanel, TransactionsPresenter> {}
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 

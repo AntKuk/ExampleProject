@@ -1,6 +1,7 @@
 package com.exampleproject.gwt.startpoint.client.pages.company;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
+import com.exampleproject.gwt.startpoint.client.presenter.TabPresenter;
 import com.exampleproject.model.shared.CompanyDto;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CompaniesPresenter {
+public class CompaniesPresenter implements TabPresenter {
     interface MyUiBinder extends UiBinder<VerticalPanel, CompaniesPresenter> {}
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
@@ -51,7 +52,7 @@ public class CompaniesPresenter {
 
         root = uiBinder.createAndBindUi(this);
         initTable();
-        Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
+        //Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
         client.getAllCompanies(new MethodCallback<List<CompanyDto>>() {
             @Override
             public void onFailure(Method method, Throwable exception) {

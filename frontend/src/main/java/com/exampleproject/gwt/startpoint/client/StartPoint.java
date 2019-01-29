@@ -61,6 +61,7 @@ public class StartPoint implements EntryPoint {
      */
     public void onModuleLoad() {
 
+        Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
         MainPage mainPage = GWT.create(MainPage.class);
 
 
@@ -143,7 +144,7 @@ public class StartPoint implements EntryPoint {
 
         RootPanel.get().add(mainPage.getElement());
 
-        Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
+
 
         Button send = new Button("Send");
         send.addClickHandler(new ClickHandler() {
