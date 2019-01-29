@@ -13,6 +13,8 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 import org.fusesource.restygwt.client.Defaults;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
@@ -26,17 +28,58 @@ public class CompaniesPresenter implements TabPresenter {
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
     private final WorkerClient client = GWT.create(WorkerClient.class);
-
     private VerticalPanel root;
+    private final SingleSelectionModel<CompanyDto> selectionModel = new SingleSelectionModel<>();
 
     @UiField
     CellTable cellTable;
     @UiField
     Button addButton;
+    @UiField
+    Button deleteButton;
+    @UiField
+    Button updateButton;
 
     @UiHandler("addButton")
     void addBtn(ClickEvent event) {
-        new AddCompanyView(this);
+        AddCompanyView addCompanyView = GWT.create(AddCompanyView.class);
+        addCompanyView.setCompaniesPresenter(this);
+        //new AddCompanyView(this);
+    }
+
+    @UiHandler("deleteButton")
+    void deleteDtn(ClickEvent event) {
+        CompanyDto companyDto = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(companyDto != null) {
+            Window.alert("Selected" + companyDto.getCompanyName());
+            client.delete(companyDto.getId(), new MethodCallback<Boolean>() {
+                @Override
+                public void onFailure(Method method, Throwable exception) {
+                    Window.alert(exception.toString() + "\n" + exception.getMessage());
+                }
+
+                @Override
+                public void onSuccess(Method method, Boolean aBoolean) {
+                    Window.alert("Deleted");
+                }
+            });
+        }
+        else {
+            Window.alert("Select company");
+        }
+    }
+
+    @UiHandler("updateButton")
+    void updateBtn(ClickEvent event) {
+        CompanyDto companyDto = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(companyDto != null) {
+            UpdateCompanyView updateCompanyView = GWT.create(UpdateCompanyView.class);
+            updateCompanyView.setCompaniesPresenter(this);
+            updateCompanyView.fillTextFields(companyDto);
+        }
+        else {
+            Window.alert("Select company");
+        }
     }
 
     private TextColumn<CompanyDto> idColumn;
@@ -133,6 +176,16 @@ public class CompaniesPresenter implements TabPresenter {
         cellTable.addColumn(iecColumn, "IEC");
         cellTable.addColumn(telColumn, "Tel");
         cellTable.addColumn(emailColumn, "Email");
+
+        cellTable.setSelectionModel(selectionModel);
+        /*
+        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+            @Override
+            public void onSelectionChange(SelectionChangeEvent selectionChangeEvent) {
+                CompanyDto companyDto = selectionModel.getSelectedObject();
+
+            }
+        })*/
     }
 
 

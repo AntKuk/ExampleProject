@@ -10,4 +10,6 @@ public interface ServiceDB<T extends BasicDto> {
     T getById(BigInteger id);
     String getEntityName();
     void add(T entity);
+    void deleteById(int id);
+    void updateById(T entity);
 }

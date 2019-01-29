@@ -43,6 +43,24 @@ public class CompanyService implements ServiceDB<CompanyDto> {
         companyDao.add(fromDto(entity));
     }
 
+    @Override
+    public void deleteById(int id) {
+        companyDao.deleteById(id);
+    }
+
+    @Override
+    public void updateById(CompanyDto companyDto) {
+        Company company = companyDao.getObject(BigInteger.valueOf(companyDto.getId()));
+        company.setCompanyName(companyDto.getCompanyName());
+        company.setAddress(companyDto.getAddress());
+        company.setIec(companyDto.getIec());
+        company.setTin(companyDto.getTin());
+        company.setEmail(companyDto.getEmail());
+        company.setTelNumber(companyDto.getTelNumber());
+
+        companyDao.updateById(company);
+    }
+
     private Company fromDto(CompanyDto companyDto) {
         Company companyDao = new Company();
         companyDao.setCompanyName(companyDto.getCompanyName());

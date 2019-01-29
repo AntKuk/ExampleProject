@@ -43,5 +43,10 @@ public class BankDAO extends BasicDAO implements Dao<Bank> {
         return query.executeUpdate();
     }
 
+    @Override
+    public void updateById(Bank entity) {
+
+    }
+
 
 }

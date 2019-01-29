@@ -24,10 +24,8 @@ public class AddCompanyView {
 
     @UiField
     Button ok;
-
     @UiField
     Button cancel;
-
     @UiField
     TextBox companyName;
     @UiField
@@ -45,7 +43,19 @@ public class AddCompanyView {
     private DialogBox dialogBox;
     private CompaniesPresenter companiesPresenter;
 
+    public AddCompanyView() {
+        dialogBox = uiBinder.createAndBindUi(this);
+        //this.companiesPresenter = companiesPresenter;
 
+        dialogBox.setText("Adding company");
+        dialogBox.setAnimationEnabled(true);
+        dialogBox.setGlassEnabled(true);
+        dialogBox.center();
+
+        dialogBox.show();
+    }
+
+/*
     public AddCompanyView(CompaniesPresenter companiesPresenter) {
         dialogBox = uiBinder.createAndBindUi(this);
         this.companiesPresenter = companiesPresenter;
@@ -57,6 +67,7 @@ public class AddCompanyView {
 
         dialogBox.show();
     }
+*/
 
     @UiHandler("cancel")
     void closeView(ClickEvent event) {
@@ -73,7 +84,6 @@ public class AddCompanyView {
             public void onFailure(Method method, Throwable exception) {
                 Window.alert(exception.toString() + "\n" + exception.getMessage());
             }
-
             @Override
             public void onSuccess(Method method, Boolean aBoolean) {
                 dialogBox.hide();
@@ -85,18 +95,15 @@ public class AddCompanyView {
                     }
 
                     @Override
-                    public void onSuccess(Method method, List<CompanyDto> companyDtos) {
-                        companiesPresenter.getCellTable().setRowData(companyDtos);
+                    public void onSuccess(Method method, List<CompanyDto> companyDto) {
+                        companiesPresenter.getCellTable().setRowData(companyDto);
                     }
                 });
-
             }
         });
-
-
     }
 
-    private CompanyDto createDto() {
+    protected CompanyDto createDto() {
         CompanyDto companyDto = new CompanyDto();
         companyDto.setCompanyName(companyName.getText());
         companyDto.setAddress(companyAddress.getText());
@@ -109,4 +116,63 @@ public class AddCompanyView {
         return companyDto;
     }
 
+    public void setCompaniesPresenter(CompaniesPresenter companiesPresenter) {
+        this.companiesPresenter = companiesPresenter;
+    }
+
+    public CompaniesPresenter getCompaniesPresenter() {
+        return companiesPresenter;
+    }
+
+    public DialogBox getDialogBox() {
+        return dialogBox;
+    }
+
+    public TextBox getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(TextBox companyName) {
+        this.companyName = companyName;
+    }
+
+    public TextBox getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(TextBox companyAddress) {
+        this.companyAddress = companyAddress;
+    }
+
+    public TextBox getIec() {
+        return iec;
+    }
+
+    public void setIec(TextBox iec) {
+        this.iec = iec;
+    }
+
+    public TextBox getTin() {
+        return tin;
+    }
+
+    public void setTin(TextBox tin) {
+        this.tin = tin;
+    }
+
+    public TextBox getTel() {
+        return tel;
+    }
+
+    public void setTel(TextBox tel) {
+        this.tel = tel;
+    }
+
+    public TextBox getEmail() {
+        return email;
+    }
+
+    public void setEmail(TextBox email) {
+        this.email = email;
+    }
 }

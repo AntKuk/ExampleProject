@@ -29,9 +29,22 @@ public class BankService implements ServiceDB<BankDto> {
         return fromDao(bankDao.getAllObjects());
     }
 
+
+
     public  void add(BankDto bank) {
         bankDao.add(fromDto(bank));
     }
+
+    @Override
+    public void deleteById(int id) {
+
+    }
+
+    @Override
+    public void updateById(BankDto entity) {
+
+    }
+
 
     public BankDto getById(BigInteger id) {
         return null;

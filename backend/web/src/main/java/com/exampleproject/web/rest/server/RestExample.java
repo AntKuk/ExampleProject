@@ -130,4 +130,16 @@ public class RestExample {
         service.add(entity);
     }
 
+    @DeleteMapping(value = "/deleteCompany", consumes = "application/json")
+    public void deleteCompany(@RequestBody Integer id) {
+        ServiceDB<CompanyDto> service = (CompanyService) dtoMap.get("Company");
+        service.deleteById(id);
+    }
+
+    @PostMapping(value = "/updateCompany", consumes = "application/json")
+    public void updateCompanyById(@RequestBody CompanyDto companyDto) {
+        ServiceDB<CompanyDto> service = (CompanyService) dtoMap.get("Company");
+        service.updateById(companyDto);
+    }
+
 }

@@ -9,6 +9,7 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -38,6 +39,14 @@ public interface WorkerClient extends RestService {
 	@POST
     @Path("/addCompany")
     void add(CompanyDto companyDto, MethodCallback<Boolean> callback);
+
+	@DELETE
+	@Path("/deleteCompany")
+	void delete(Integer id, MethodCallback<Boolean> callback);
+
+	@POST
+	@Path("/updateCompany")
+	void update(CompanyDto companyDto, MethodCallback<Boolean> callback);
 
 
 

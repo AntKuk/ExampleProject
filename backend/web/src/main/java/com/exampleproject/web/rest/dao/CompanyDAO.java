@@ -44,5 +44,9 @@ public class CompanyDAO extends BasicDAO implements Dao<Company> {
         return query.executeUpdate();
     }
 
+    public void updateById(Company company) {
+        update(company);
+    }
+
 
 }
