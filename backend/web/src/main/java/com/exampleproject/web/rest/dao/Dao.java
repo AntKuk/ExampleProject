@@ -14,4 +14,5 @@ public interface Dao<T extends BasicEntity> {
     void add(T entity);
     int deleteById(int id);
     void updateById(T entity);
+    T getByName(String name);
 }

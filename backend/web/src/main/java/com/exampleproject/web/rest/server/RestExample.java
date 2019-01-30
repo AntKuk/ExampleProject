@@ -1,13 +1,11 @@
 package com.exampleproject.web.rest.server;
 
-import com.exampleproject.model.shared.BankDto;
-import com.exampleproject.model.shared.BasicDto;
-import com.exampleproject.model.shared.CompanyDto;
-import com.exampleproject.model.shared.TestDto;
+import com.exampleproject.model.shared.*;
 import com.exampleproject.web.rest.entity.Bank;
 import com.exampleproject.web.rest.service.BankService;
 import com.exampleproject.web.rest.service.CompanyService;
 import com.exampleproject.web.rest.service.ServiceDB;
+import com.exampleproject.web.rest.service.TransactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +32,7 @@ public class RestExample {
 
 
     @Autowired
-    public RestExample(ApplicationContext applicationContext,  List<ServiceDB<? extends BasicDto>> dtoList) {
+    public RestExample(ApplicationContext applicationContext, List<ServiceDB<? extends BasicDto>> dtoList) {
         this.applicationContext = applicationContext;
         this.dtoMap = new HashMap<String, ServiceDB<? extends BasicDto>>(dtoList.size());
 
@@ -42,14 +40,14 @@ public class RestExample {
             dtoMap.put(dto.getEntityName(), dto);
         }
     }
-
+/*
     @RequestMapping("/test")
     public TestDto test() {
         TestDto dto = createDto();
         dto.setMessage("It's a test string from server");
         return dto;
     }
-/*
+
     @RequestMapping("/testDb")
     public boolean testDB() {
         try {
@@ -59,7 +57,7 @@ public class RestExample {
         }
         return true;
     }
-*/
+
     @RequestMapping("/test/{someText}")
     public TestDto testAdditional(@PathVariable String someText) {
         TestDto dto = createDto();
@@ -74,6 +72,8 @@ public class RestExample {
     protected CompanyDto createMyDto() {
         return applicationContext.getBean(CompanyDto.class);
     }
+
+*/
 /*
     @RequestMapping("/company")
     public List<CompanyDto> getDto() {
@@ -118,13 +118,9 @@ public class RestExample {
         return service.getAll();
     }
 
-    @PostMapping(value = "/Bank", consumes = "application/json", produces = "application/json")
-    public void addBank(@RequestBody BankDto entity) {
-        ServiceDB<BankDto> service = (BankService) dtoMap.get(entity);
-        service.add(entity);
-    }
 
-    @RequestMapping(value = "/addCompany", consumes = "application/json")
+
+    @PostMapping(value = "/addCompany", consumes = "application/json")
     public void addCompany(@RequestBody CompanyDto entity) {
         ServiceDB<CompanyDto> service = (CompanyService) dtoMap.get("Company");
         service.add(entity);
@@ -141,5 +137,32 @@ public class RestExample {
         ServiceDB<CompanyDto> service = (CompanyService) dtoMap.get("Company");
         service.updateById(companyDto);
     }
+
+    @PostMapping(value = "/addBank", consumes = "application/json")
+    public void addBank(@RequestBody BankDto entity) {
+        ServiceDB<BankDto> service = (BankService) dtoMap.get("Bank");
+        service.add(entity);
+    }
+
+    @DeleteMapping(value = "/deleteBank", consumes = "application/json")
+    public void deleteBank(@RequestBody Integer id) {
+        ServiceDB<BankDto> service = (BankService) dtoMap.get("Bank");
+        service.deleteById(id);
+    }
+
+    @PostMapping(value = "/updateBank", consumes = "application/json")
+    public void updateBankById(@RequestBody BankDto bankDto) {
+        ServiceDB<BankDto> service = (BankService) dtoMap.get("Bank");
+        service.updateById(bankDto);
+    }
+
+
+    @PostMapping(value = "/addTransact", consumes = "application/json")
+    public void addTransact(@RequestBody TransactDto entity) {
+        ServiceDB<TransactDto> service = (TransactService) dtoMap.get("Transact");
+        service.add(entity);
+    }
+
+
 
 }

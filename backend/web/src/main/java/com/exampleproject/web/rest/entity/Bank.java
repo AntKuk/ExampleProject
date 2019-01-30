@@ -8,7 +8,7 @@ import java.math.BigInteger;
 public class Bank implements BasicEntity{
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "bank_id_Sequence")
-    @SequenceGenerator(name = "bank_id_Sequence", sequenceName = "bank_seq")
+    @SequenceGenerator(name = "bank_id_Sequence", sequenceName = "bank_seq", allocationSize=1)
     @Column(name = "idbank", nullable = false)
     private BigInteger id;
 

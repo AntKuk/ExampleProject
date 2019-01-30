@@ -13,6 +13,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.SingleSelectionModel;
 import org.fusesource.restygwt.client.Defaults;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
@@ -24,18 +25,21 @@ public class BanksPresenter implements TabPresenter {
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
     private final WorkerClient client = GWT.create(WorkerClient.class);
+    private final SingleSelectionModel<BankDto> selectionModel = new SingleSelectionModel<>();
 
     @UiField
     CellTable cellTable;
-
     @UiField
     Button addButton;
+    @UiField
+    Button deleteButton;
+    @UiField
+    Button updateButton;
 
     private TextColumn<BankDto> idColumn;
     private TextColumn<BankDto> nameColumn;
     private TextColumn<BankDto> cityColumn;
     private TextColumn<BankDto> bicColumn;
-    private TextColumn<BankDto> coraccColumn;
 
 
     private VerticalPanel root;
@@ -58,18 +62,58 @@ public class BanksPresenter implements TabPresenter {
         });
     }
 
-    public VerticalPanel getElement() {
-        return root;
-    }
-
-    public CellTable getCellTable() {
-        return cellTable;
-    }
-
     @UiHandler("addButton")
     void addBtn(ClickEvent event) {
-        new AddBankView();
+        AddBankView addBankView = GWT.create(AddBankView.class);
+        addBankView.setBanksPresenter(this);
     }
+
+    @UiHandler("deleteButton")
+    void deleteBtn(ClickEvent event) {
+        BankDto bankDto = ((SingleSelectionModel<BankDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(bankDto != null) {
+            Window.alert("Selected" + bankDto.getBankName());
+            client.deleteBank(bankDto.getId(), new MethodCallback<Boolean>() {
+                @Override
+                public void onFailure(Method method, Throwable exception) {
+                    Window.alert(exception.toString() + "\n" + exception.getMessage());
+                }
+
+                @Override
+                public void onSuccess(Method method, Boolean aBoolean) {
+                    Window.alert("Deleted");
+                    client.getAllBanks(new MethodCallback<List<BankDto>>() {
+                        @Override
+                        public void onFailure(Method method, Throwable exception) {
+                            Window.alert(exception.toString() + "\n" + exception.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(Method method, List<BankDto> bankDto) {
+                            getCellTable().setRowData(bankDto);
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            Window.alert("Select bank");
+        }
+    }
+
+    @UiHandler("updateButton")
+    void updateBtn(ClickEvent event) {
+        BankDto bankDto = ((SingleSelectionModel<BankDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(bankDto != null) {
+            UpdateBankView updateBankView = GWT.create(UpdateBankView.class);
+            updateBankView.setBanksPresenter(this);
+            updateBankView.fillTextFields(bankDto);
+        }
+        else {
+            Window.alert("Select bank");
+        }
+    }
+
+
 
     private void initTable() {
         idColumn = new TextColumn<BankDto>() {
@@ -104,6 +148,16 @@ public class BanksPresenter implements TabPresenter {
         cellTable.addColumn(nameColumn, "Name");
         cellTable.addColumn(cityColumn, "City");
         cellTable.addColumn(bicColumn, "BIC");
+
+        cellTable.setSelectionModel(selectionModel);
+    }
+
+    public VerticalPanel getElement() {
+        return root;
+    }
+
+    public CellTable getCellTable() {
+        return cellTable;
     }
 
 }

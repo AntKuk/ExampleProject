@@ -40,47 +40,7 @@ public class CompaniesPresenter implements TabPresenter {
     @UiField
     Button updateButton;
 
-    @UiHandler("addButton")
-    void addBtn(ClickEvent event) {
-        AddCompanyView addCompanyView = GWT.create(AddCompanyView.class);
-        addCompanyView.setCompaniesPresenter(this);
-        //new AddCompanyView(this);
-    }
 
-    @UiHandler("deleteButton")
-    void deleteDtn(ClickEvent event) {
-        CompanyDto companyDto = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
-        if(companyDto != null) {
-            Window.alert("Selected" + companyDto.getCompanyName());
-            client.delete(companyDto.getId(), new MethodCallback<Boolean>() {
-                @Override
-                public void onFailure(Method method, Throwable exception) {
-                    Window.alert(exception.toString() + "\n" + exception.getMessage());
-                }
-
-                @Override
-                public void onSuccess(Method method, Boolean aBoolean) {
-                    Window.alert("Deleted");
-                }
-            });
-        }
-        else {
-            Window.alert("Select company");
-        }
-    }
-
-    @UiHandler("updateButton")
-    void updateBtn(ClickEvent event) {
-        CompanyDto companyDto = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
-        if(companyDto != null) {
-            UpdateCompanyView updateCompanyView = GWT.create(UpdateCompanyView.class);
-            updateCompanyView.setCompaniesPresenter(this);
-            updateCompanyView.fillTextFields(companyDto);
-        }
-        else {
-            Window.alert("Select company");
-        }
-    }
 
     private TextColumn<CompanyDto> idColumn;
     private TextColumn<CompanyDto> nameColumn;
@@ -110,6 +70,61 @@ public class CompaniesPresenter implements TabPresenter {
         });
 
     }
+
+    @UiHandler("addButton")
+    void addBtn(ClickEvent event) {
+        AddCompanyView addCompanyView = GWT.create(AddCompanyView.class);
+        addCompanyView.setCompaniesPresenter(this);
+        //new AddCompanyView(this);
+    }
+
+    @UiHandler("deleteButton")
+    void deleteDtn(ClickEvent event) {
+        CompanyDto companyDto = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(companyDto != null) {
+            Window.alert("Selected" + companyDto.getCompanyName());
+            client.deleteCompany(companyDto.getId(), new MethodCallback<Boolean>() {
+                @Override
+                public void onFailure(Method method, Throwable exception) {
+                    Window.alert(exception.toString() + "\n" + exception.getMessage());
+                }
+
+                @Override
+                public void onSuccess(Method method, Boolean aBoolean) {
+                    Window.alert("Deleted");
+
+                    client.getAllCompanies(new MethodCallback<List<CompanyDto>>() {
+                        @Override
+                        public void onFailure(Method method, Throwable exception) {
+                            Window.alert(exception.toString() + "\n" + exception.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(Method method, List<CompanyDto> companyDto) {
+                            getCellTable().setRowData(companyDto);
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            Window.alert("Select company");
+        }
+    }
+
+    @UiHandler("updateButton")
+    void updateBtn(ClickEvent event) {
+        CompanyDto companyDto = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(companyDto != null) {
+            UpdateCompanyView updateCompanyView = GWT.create(UpdateCompanyView.class);
+            updateCompanyView.setCompaniesPresenter(this);
+            updateCompanyView.fillTextFields(companyDto);
+        }
+        else {
+            Window.alert("Select company");
+        }
+    }
+
+
 
     public VerticalPanel getElement() {
         return root;

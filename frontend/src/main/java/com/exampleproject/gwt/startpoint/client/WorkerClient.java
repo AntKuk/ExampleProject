@@ -5,6 +5,7 @@ package com.exampleproject.gwt.startpoint.client;
 import com.exampleproject.model.shared.BankDto;
 import com.exampleproject.model.shared.CompanyDto;
 import com.exampleproject.model.shared.TestDto;
+import com.exampleproject.model.shared.TransactDto;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
@@ -34,20 +35,38 @@ public interface WorkerClient extends RestService {
 	@Path("/Bank")
 	void getAllBanks(MethodCallback<List<BankDto>> callback);
 
+	@GET
+	@Path("/Transact")
+	void getAllTransacts(MethodCallback<List<TransactDto>> callback);
+
 
 
 	@POST
     @Path("/addCompany")
-    void add(CompanyDto companyDto, MethodCallback<Boolean> callback);
+    void addCompany(CompanyDto companyDto, MethodCallback<Boolean> callback);
 
 	@DELETE
 	@Path("/deleteCompany")
-	void delete(Integer id, MethodCallback<Boolean> callback);
+	void deleteCompany(Integer id, MethodCallback<Boolean> callback);
 
 	@POST
 	@Path("/updateCompany")
-	void update(CompanyDto companyDto, MethodCallback<Boolean> callback);
+	void updateCompany(CompanyDto companyDto, MethodCallback<Boolean> callback);
 
+	@POST
+	@Path("/addBank")
+	void addBank(BankDto bankDto, MethodCallback<Boolean> callback);
 
+	@DELETE
+	@Path("deleteBank")
+	void deleteBank(Integer id, MethodCallback callback);
+
+	@POST
+	@Path("/updateBank")
+	void updateBank(BankDto bankDto, MethodCallback<Boolean> callback);
+
+	@POST
+	@Path("/addTransact")
+	void addTransact(TransactDto transactDto, MethodCallback<Boolean> callback);
 
 }

@@ -79,7 +79,7 @@ public class AddCompanyView {
         final WorkerClient client = GWT.create(WorkerClient.class);
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
         CompanyDto companyDto = createDto();
-        client.add(companyDto, new MethodCallback<Boolean>() {
+        client.addCompany(companyDto, new MethodCallback<Boolean>() {
             @Override
             public void onFailure(Method method, Throwable exception) {
                 Window.alert(exception.toString() + "\n" + exception.getMessage());
@@ -93,7 +93,6 @@ public class AddCompanyView {
                     public void onFailure(Method method, Throwable exception) {
                         Window.alert(exception.toString() + "\n" + exception.getMessage());
                     }
-
                     @Override
                     public void onSuccess(Method method, List<CompanyDto> companyDto) {
                         companiesPresenter.getCellTable().setRowData(companyDto);
@@ -175,4 +174,5 @@ public class AddCompanyView {
     public void setEmail(TextBox email) {
         this.email = email;
     }
+
 }

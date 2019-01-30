@@ -48,5 +48,12 @@ public class CompanyDAO extends BasicDAO implements Dao<Company> {
         update(company);
     }
 
+    public Company getByName(String name) {
+        Criteria criteria = getSession().createCriteria(Company.class);
+        criteria.add(Restrictions.eq("companyName", name));
+        return (Company) criteria.uniqueResult();
+    }
+
+
 
 }

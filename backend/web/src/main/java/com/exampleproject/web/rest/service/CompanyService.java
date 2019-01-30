@@ -29,11 +29,11 @@ public class CompanyService implements ServiceDB<CompanyDto> {
     public List<CompanyDto> getAll() {
         return fromDao(companyDao.getAllObjects());
     }
-
+/*
     public CompanyDto getById(BigInteger id) {
         return null;
     }
-
+*/
     public String getEntityName() {
         return companyDao.getEntityName();
     }

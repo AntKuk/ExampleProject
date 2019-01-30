@@ -5,6 +5,7 @@ import com.exampleproject.web.rest.dao.Dao;
 import com.exampleproject.web.rest.entity.Bank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -37,12 +38,17 @@ public class BankService implements ServiceDB<BankDto> {
 
     @Override
     public void deleteById(int id) {
-
+        bankDao.deleteById(id);
     }
 
     @Override
-    public void updateById(BankDto entity) {
+    public void updateById(BankDto bankDto) {
+        Bank bank = bankDao.getObject(BigInteger.valueOf(bankDto.getId()));
+        bank.setBankName(bankDto.getBankName());
+        bank.setCity(bankDto.getCity());
+        bank.setBic(bankDto.getBic());
 
+        bankDao.updateById(bank);
     }
 
 
@@ -71,7 +77,7 @@ public class BankService implements ServiceDB<BankDto> {
 
     private Bank fromDto(BankDto bankDto) {
         Bank bankDao = new Bank();
-        bankDao.setId(BigInteger.valueOf(bankDto.getId()));
+        //bankDao.setId(BigInteger.valueOf(bankDto.getId()));
         bankDao.setBankName(bankDto.getBankName());
         bankDao.setBic(bankDto.getBic());
         bankDao.setCity(bankDto.getCity());

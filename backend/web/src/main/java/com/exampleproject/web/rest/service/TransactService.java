@@ -1,0 +1,86 @@
+package com.exampleproject.web.rest.service;
+
+import com.exampleproject.model.shared.TransactDto;
+import com.exampleproject.web.rest.dao.Dao;
+import com.exampleproject.web.rest.entity.Company;
+import com.exampleproject.web.rest.entity.Transact;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service("transactService")
+public class TransactService implements ServiceDB<TransactDto> {
+    private final Dao<Transact> transactDao;
+    private final Dao<Company> companyDao;
+
+
+    @Autowired
+    public TransactService(@Qualifier("transactionDAO") Dao<Transact> transactDao,
+                           @Qualifier("companyDAO") Dao<Company> companyDao) {
+        this.transactDao = transactDao;
+        this.companyDao = companyDao;
+    }
+
+
+    public List<TransactDto> getAll() {
+        return fromDao(transactDao.getAllObjects());
+    }
+
+
+
+    public  void add(TransactDto transact) {
+        transactDao.add(fromDto(transact));
+    }
+
+    @Override
+    public void deleteById(int id) {
+        transactDao.deleteById(id);
+    }
+
+    @Override
+    public void updateById(TransactDto transactDto) {
+
+    }
+
+/*
+    public TransactDto getById(BigInteger id) {
+        return null;
+    }
+*/
+    public String getEntityName() {
+        return transactDao.getEntityName();
+    }
+
+
+    private List<TransactDto> fromDao(List<Transact> list) {
+        List<TransactDto> listDto = new ArrayList<>();
+        for(Transact transact : list) {
+            TransactDto transactDto = new TransactDto();
+            transactDto.setId(transact.getId().intValue());
+            //transactDto.setTranDate(transact.getTranDate());
+            transactDto.setSeller(transact.getIdSeller().getCompanyName());
+            transactDto.setCustomer(transact.getIdSeller().getCompanyName());
+            transactDto.setTotal(transact.getTotal());
+            transactDto.setSellerAcc(transact.getSellerAcc().getTin());
+            transactDto.setCustomerAcc(transact.getCustomerAcc().getTin());
+
+
+            listDto.add(transactDto);
+        }
+        return listDto;
+    }
+
+    private Transact fromDto(TransactDto transactDto) {
+        Transact transactDao = new Transact();
+        //bankDao.setId(BigInteger.valueOf(bankDto.getId()));
+
+        transactDao.setIdCustomer(companyDao.getByName(transactDto.getCustomer()));
+        transactDao.setIdSeller(companyDao.getByName(transactDto.getSeller()));
+        transactDao.setTotal(transactDto.getTotal());
+        return transactDao;
+    }
+}
