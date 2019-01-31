@@ -68,7 +68,7 @@ public class TransactService implements ServiceDB<TransactDto> {
             transactDto.setId(transact.getId().intValue());
             //transactDto.setTranDate(transact.getTranDate());
             transactDto.setSeller(transact.getIdSeller().getCompanyName());
-            transactDto.setCustomer(transact.getIdSeller().getCompanyName());
+            transactDto.setCustomer(transact.getIdCustomer().getCompanyName());
             transactDto.setTotal(transact.getTotal());
             transactDto.setSellerAcc(transact.getSellerAcc().getCorAcc().intValue());
             transactDto.setCustomerAcc(transact.getCustomerAcc().getCorAcc().intValue());
