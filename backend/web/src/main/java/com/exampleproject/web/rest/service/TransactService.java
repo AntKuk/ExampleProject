@@ -2,6 +2,7 @@ package com.exampleproject.web.rest.service;
 
 import com.exampleproject.model.shared.TransactDto;
 import com.exampleproject.web.rest.dao.Dao;
+import com.exampleproject.web.rest.entity.BankAccount;
 import com.exampleproject.web.rest.entity.Company;
 import com.exampleproject.web.rest.entity.Transact;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +11,23 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service("transactService")
 public class TransactService implements ServiceDB<TransactDto> {
     private final Dao<Transact> transactDao;
     private final Dao<Company> companyDao;
+    private final Dao<BankAccount> bankAccountDao;
 
 
     @Autowired
     public TransactService(@Qualifier("transactionDAO") Dao<Transact> transactDao,
-                           @Qualifier("companyDAO") Dao<Company> companyDao) {
+                           @Qualifier("companyDAO") Dao<Company> companyDao,
+                           @Qualifier("bankAccDAO") Dao<BankAccount> bankAccountDao) {
         this.transactDao = transactDao;
         this.companyDao = companyDao;
+        this.bankAccountDao = bankAccountDao;
     }
 
 
@@ -65,8 +70,8 @@ public class TransactService implements ServiceDB<TransactDto> {
             transactDto.setSeller(transact.getIdSeller().getCompanyName());
             transactDto.setCustomer(transact.getIdSeller().getCompanyName());
             transactDto.setTotal(transact.getTotal());
-            transactDto.setSellerAcc(transact.getSellerAcc().getTin());
-            transactDto.setCustomerAcc(transact.getCustomerAcc().getTin());
+            transactDto.setSellerAcc(transact.getSellerAcc().getCorAcc().intValue());
+            transactDto.setCustomerAcc(transact.getCustomerAcc().getCorAcc().intValue());
 
 
             listDto.add(transactDto);
@@ -81,6 +86,9 @@ public class TransactService implements ServiceDB<TransactDto> {
         transactDao.setIdCustomer(companyDao.getByName(transactDto.getCustomer()));
         transactDao.setIdSeller(companyDao.getByName(transactDto.getSeller()));
         transactDao.setTotal(transactDto.getTotal());
+        transactDao.setTranDate(new Date());
+        transactDao.setSellerAcc(bankAccountDao.getByName(Integer.toString(companyDao.getByName(transactDto.getSeller()).getId().intValue())));
+        transactDao.setCustomerAcc(bankAccountDao.getByName(Integer.toString(companyDao.getByName(transactDto.getCustomer()).getId().intValue())));
         return transactDao;
     }
 }

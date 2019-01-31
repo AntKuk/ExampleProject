@@ -10,11 +10,6 @@
             <g:ListBox ui:field="customerName"/>
             <g:Label>Total</g:Label>
             <g:TextBox ui:field="total"/>
-            <g:Label>Seller Acc</g:Label>
-            <g:TextBox ui:field="sellerAcc"/>
-            <g:Label>Customer Acc</g:Label>
-            <g:TextBox ui:field="customerAcc"/>
-
             <g:Button ui:field="ok">Ok</g:Button>
             <g:Button ui:field="cancel">Cancel</g:Button>
         </g:HTMLPanel>

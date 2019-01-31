@@ -35,8 +35,7 @@ public class TransactionsPresenter implements TabPresenter {
     Button addButton;
     @UiField
     Button deleteButton;
-    @UiField
-    Button updateButton;
+
 
     private TextColumn<TransactDto> idColumn;
     private Column<TransactDto, Date> dateColumn;
@@ -69,6 +68,39 @@ public class TransactionsPresenter implements TabPresenter {
     void addBtn(ClickEvent event) {
         AddTransactView addTransactView = GWT.create(AddTransactView.class);
         addTransactView.setTransactionsPresenter(this);
+    }
+
+    @UiHandler("deleteButton")
+    void deleteDtn(ClickEvent event) {
+        TransactDto transactDto = ((SingleSelectionModel<TransactDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(transactDto != null) {
+
+            client.deleteTransact(transactDto.getId(), new MethodCallback<Boolean>() {
+                @Override
+                public void onFailure(Method method, Throwable exception) {
+                    Window.alert(exception.toString() + "\n" + exception.getMessage());
+                }
+
+                @Override
+                public void onSuccess(Method method, Boolean aBoolean) {
+                    Window.alert("Deleted");
+
+                    client.getAllTransacts(new MethodCallback<List<TransactDto>>() {
+                        @Override
+                        public void onFailure(Method method, Throwable exception) {
+                            Window.alert(exception.toString() + "\n" + exception.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(Method method, List<TransactDto> companyDto) {
+                            getCellTable().setRowData(companyDto);
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            Window.alert("Select transaction");
+        }
     }
 
     private void initTable() {

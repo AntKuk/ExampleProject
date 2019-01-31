@@ -9,7 +9,8 @@ import java.util.Date;
 @Table(name = "transaction")
 public class Transact implements BasicEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "transact_id_Sequence")
+    @SequenceGenerator(name = "transact_id_Sequence", sequenceName = "transact_seq", allocationSize=1)
     @Column(name = "idtran", nullable = false)
     private BigInteger id;
 

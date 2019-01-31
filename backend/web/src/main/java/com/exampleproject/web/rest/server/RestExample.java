@@ -163,6 +163,11 @@ public class RestExample {
         service.add(entity);
     }
 
+    @DeleteMapping(value = "/deleteTransact", consumes = "application/json")
+    public void deleteTransact(@RequestBody Integer id) {
+        ServiceDB<TransactDto> service = (TransactService) dtoMap.get("Transact");
+        service.deleteById(id);
+    }
 
 
 }

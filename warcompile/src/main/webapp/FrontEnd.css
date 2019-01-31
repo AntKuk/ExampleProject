@@ -9,3 +9,12 @@ h1 {
 body, td, a, div, .p {
     font-family: arial, sans-serif
 }
+
+.gwt-Button {
+    margin: 15px !important;
+}
+
+.gwt-Label {
+    font-size: 35px;
+    padding: 5px;
+}

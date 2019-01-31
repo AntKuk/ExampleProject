@@ -19,6 +19,10 @@ public class UpdateCompanyView extends AddCompanyView {
     public  UpdateCompanyView() {
         super();
         getDialogBox().setText("Update company");
+        getBankAcc().removeFromParent();
+        getBank().removeFromParent();
+        getBankAccLabel().removeFromParent();
+        getBankLabel().removeFromParent();
     }
 
     @UiHandler("ok")
@@ -62,5 +66,7 @@ public class UpdateCompanyView extends AddCompanyView {
         getTin().setText(Integer.toString(companyDto.getTin()));
         getEmail().setText(companyDto.getEmail());
         getTel().setText(Integer.toString(companyDto.getTelNumber()));
+        //getBankAcc().setText(Integer.toString(companyDto.getAcc().getCorAcc()));
+
     }
 }

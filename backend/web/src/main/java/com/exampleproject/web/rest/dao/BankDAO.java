@@ -50,7 +50,9 @@ public class BankDAO extends BasicDAO implements Dao<Bank> {
 
     @Override
     public Bank getByName(String name) {
-        return null;
+        Criteria criteria = getSession().createCriteria(Bank.class);
+        criteria.add(Restrictions.eq("bankName", name));
+        return (Bank) criteria.uniqueResult();
     }
 
 

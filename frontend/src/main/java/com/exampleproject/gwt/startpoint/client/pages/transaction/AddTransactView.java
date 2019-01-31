@@ -6,6 +6,7 @@ import com.exampleproject.model.shared.BankDto;
 import com.exampleproject.model.shared.CompanyDto;
 import com.exampleproject.model.shared.TransactDto;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -36,10 +37,7 @@ public class AddTransactView {
     ListBox customerName;
     @UiField
     TextBox total;
-    @UiField
-    TextBox sellerAcc;
-    @UiField
-    TextBox customerAcc;
+
 
 
     private DialogBox dialogBox;
@@ -93,7 +91,6 @@ public class AddTransactView {
             }
         });
     }
-
 
 
     protected TransactDto createDto() {
@@ -154,22 +151,6 @@ public class AddTransactView {
 
     public void setTotal(TextBox total) {
         this.total = total;
-    }
-
-    public TextBox getSellerAcc() {
-        return sellerAcc;
-    }
-
-    public void setSellerAcc(TextBox sellerAcc) {
-        this.sellerAcc = sellerAcc;
-    }
-
-    public TextBox getCustomerAcc() {
-        return customerAcc;
-    }
-
-    public void setCustomerAcc(TextBox customerAcc) {
-        this.customerAcc = customerAcc;
     }
 
     public DialogBox getDialogBox() {

@@ -69,4 +69,8 @@ public interface WorkerClient extends RestService {
 	@Path("/addTransact")
 	void addTransact(TransactDto transactDto, MethodCallback<Boolean> callback);
 
+	@DELETE
+	@Path("/deleteTransact")
+	void deleteTransact(Integer id, MethodCallback callback);
+
 }

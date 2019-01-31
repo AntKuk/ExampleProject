@@ -144,7 +144,7 @@ public class StartPoint implements EntryPoint {
 
         RootPanel.get().add(mainPage.getElement());
 
-
+/*
 
         Button send = new Button("Send");
         send.addClickHandler(new ClickHandler() {
@@ -198,5 +198,8 @@ public class StartPoint implements EntryPoint {
             }
         });
         RootPanel.get().add(button);
+        */
     }
+
+
 }

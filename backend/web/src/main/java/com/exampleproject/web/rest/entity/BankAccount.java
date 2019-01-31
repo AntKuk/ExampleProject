@@ -7,7 +7,7 @@ import java.math.BigInteger;
 @Table(name="bankacc")
 public class BankAccount implements BasicEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "coracc", nullable = false)
     private BigInteger corAcc;
 
@@ -20,16 +20,13 @@ public class BankAccount implements BasicEntity{
     public BankAccount() {
     }
 
-    public BankAccount(int idBank, int tin) {
-        this.idBank = idBank;
-        this.idCom = tin;
-    }
 
-    public BigInteger getId() {
+
+    public BigInteger getCorAcc() {
         return corAcc;
     }
 
-    public void setId(BigInteger corAcc) {
+    public void setCorAcc(BigInteger corAcc) {
         this.corAcc = corAcc;
     }
 
@@ -41,12 +38,12 @@ public class BankAccount implements BasicEntity{
         this.idBank = idBank;
     }
 
-    public int getTin() {
+    public int getIdCom() {
         return idCom;
     }
 
-    public void setTin(int tin) {
-        this.idCom = tin;
+    public void setIdCom(int idCom) {
+        this.idCom = idCom;
     }
 
     @Override

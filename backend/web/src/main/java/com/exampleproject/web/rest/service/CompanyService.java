@@ -2,6 +2,8 @@ package com.exampleproject.web.rest.service;
 
 import com.exampleproject.model.shared.CompanyDto;
 import com.exampleproject.web.rest.dao.Dao;
+import com.exampleproject.web.rest.entity.Bank;
+import com.exampleproject.web.rest.entity.BankAccount;
 import com.exampleproject.web.rest.entity.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,10 +17,16 @@ import java.util.List;
 public class CompanyService implements ServiceDB<CompanyDto> {
 
     private final Dao<Company> companyDao;
+    private  final Dao<BankAccount> accountDao;
+    private final Dao<Bank> bankDao;
 
     @Autowired
-    public CompanyService(@Qualifier("companyDAO") Dao<Company> companyDao) {
+    public CompanyService(@Qualifier("companyDAO") Dao<Company> companyDao,
+                          @Qualifier("bankAccDAO") Dao<BankAccount> accountDao,
+                          @Qualifier("bankDAO") Dao<Bank> bankDao) {
         this.companyDao = companyDao;
+        this.accountDao = accountDao;
+        this.bankDao = bankDao;
     }
 
     /*
@@ -41,6 +49,7 @@ public class CompanyService implements ServiceDB<CompanyDto> {
     @Override
     public void add(CompanyDto entity) {
         companyDao.add(fromDto(entity));
+        accountDao.add(createAcc(entity));
     }
 
     @Override
@@ -73,6 +82,15 @@ public class CompanyService implements ServiceDB<CompanyDto> {
         companyDao.setTin(companyDto.getTin());
 
         return companyDao;
+    }
+
+    private BankAccount createAcc(CompanyDto companyDto) {
+        BankAccount acc = new BankAccount();
+        acc.setCorAcc(BigInteger.valueOf(companyDto.getAcc().getCorAcc()));
+        acc.setIdCom(companyDao.getByName(companyDto.getAcc().getIdCom()).getId().intValue());
+        acc.setIdBank(bankDao.getByName(companyDto.getAcc().getIdBank()).getId().intValue());
+
+        return acc;
     }
 
 
