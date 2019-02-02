@@ -2,10 +2,7 @@ package com.exampleproject.gwt.startpoint.client;
 
 
 
-import com.exampleproject.model.shared.BankDto;
-import com.exampleproject.model.shared.CompanyDto;
-import com.exampleproject.model.shared.TestDto;
-import com.exampleproject.model.shared.TransactDto;
+import com.exampleproject.model.shared.*;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
@@ -72,5 +69,9 @@ public interface WorkerClient extends RestService {
 	@DELETE
 	@Path("/deleteTransact")
 	void deleteTransact(Integer id, MethodCallback callback);
+
+	@POST
+	@Path("login")
+	void login(UserDto user, MethodCallback<Boolean> callback);
 
 }

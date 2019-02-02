@@ -2,11 +2,13 @@ package com.exampleproject.gwt.startpoint.client.pages.company;
 
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
+import com.exampleproject.gwt.startpoint.client.pages.Validator;
 import com.exampleproject.model.shared.BankAccDto;
 import com.exampleproject.model.shared.BankDto;
 import com.exampleproject.model.shared.CompanyDto;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -49,6 +51,8 @@ public class AddCompanyView {
     @UiField
     Label bankAccLabel;
 
+
+
     private DialogBox dialogBox;
     private CompaniesPresenter companiesPresenter;
 
@@ -89,28 +93,34 @@ public class AddCompanyView {
     void add(ClickEvent event) {
 
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
-        CompanyDto companyDto = createDto();
-        client.addCompany(companyDto, new MethodCallback<Boolean>() {
-            @Override
-            public void onFailure(Method method, Throwable exception) {
-                Window.alert(exception.toString() + "\n" + exception.getMessage());
-            }
-            @Override
-            public void onSuccess(Method method, Boolean aBoolean) {
-                dialogBox.hide();
-                Window.alert("Added");
-                client.getAllCompanies(new MethodCallback<List<CompanyDto>>() {
-                    @Override
-                    public void onFailure(Method method, Throwable exception) {
-                        Window.alert(exception.toString() + "\n" + exception.getMessage());
-                    }
-                    @Override
-                    public void onSuccess(Method method, List<CompanyDto> companyDto) {
-                        companiesPresenter.getCellTable().setRowData(companyDto);
-                    }
-                });
-            }
-        });
+        if(new Validator().isEmail(email.getText())) {
+            CompanyDto companyDto = createDto();
+            client.addCompany(companyDto, new MethodCallback<Boolean>() {
+                @Override
+                public void onFailure(Method method, Throwable exception) {
+                    Window.alert(exception.toString() + "\n" + exception.getMessage());
+                }
+                @Override
+                public void onSuccess(Method method, Boolean aBoolean) {
+                    dialogBox.hide();
+                    Window.alert("Added");
+                    client.getAllCompanies(new MethodCallback<List<CompanyDto>>() {
+                        @Override
+                        public void onFailure(Method method, Throwable exception) {
+                            Window.alert(exception.toString() + "\n" + exception.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(Method method, List<CompanyDto> companyDto) {
+                            companiesPresenter.getCellTable().setRowData(companyDto);
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            Window.alert("Email is incorrect!");
+        }
+
 
     }
 

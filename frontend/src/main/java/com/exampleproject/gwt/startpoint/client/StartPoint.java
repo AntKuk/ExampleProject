@@ -3,8 +3,10 @@ package com.exampleproject.gwt.startpoint.client;
 
 import com.exampleproject.gwt.startpoint.client.pages.bank.BanksPresenter;
 import com.exampleproject.gwt.startpoint.client.pages.company.CompaniesPresenter;
+import com.exampleproject.gwt.startpoint.client.pages.main.LoginPage;
 import com.exampleproject.gwt.startpoint.client.pages.main.MainPage;
 import com.exampleproject.gwt.startpoint.client.pages.transaction.TransactionsPresenter;
+import com.exampleproject.model.shared.UserDto;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -62,9 +64,57 @@ public class StartPoint implements EntryPoint {
     public void onModuleLoad() {
 
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
-        MainPage mainPage = GWT.create(MainPage.class);
+        LoginPage loginPage = GWT.create(LoginPage.class);
+        //MainPage mainPage = GWT.create(MainPage.class);
+
+/*
+        HTMLPanel htmlPanel = new HTMLPanel("TEST");
+        VerticalPanel verticalPanel = GWT.create(VerticalPanel.class);
+        Label loginLabel = new Label("LOGIN");
+        Label pwdLabel = new Label("PASSWORD");
+        TextBox login = new TextBox();
+        TextBox pwd = new TextBox();
+        Button ok = new Button("OK");
+        verticalPanel.add(loginLabel);
+        verticalPanel.add(login);
+        verticalPanel.add(pwdLabel);
+        verticalPanel.add(pwd);
+        verticalPanel.add(ok);
+        htmlPanel.add(verticalPanel);
+        dialogBox.add(htmlPanel);
 
 
+        RootPanel.get().add(dialogBox);
+
+        ok.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                String name = login.getText();
+                Integer p = pwd.getText().hashCode();
+                UserDto user = new UserDto(name, p);
+                client.login(user, new MethodCallback<Boolean>() {
+                    @Override
+                    public void onFailure(Method method, Throwable throwable) {
+                        Window.alert("ACCESS DENIED");
+                    }
+
+                    @Override
+                    public void onSuccess(Method method, Boolean aBoolean) {
+                        if(aBoolean) {
+                            dialogBox.hide();
+                            dialogBox.removeFromParent();
+                            MainPage mainPage = GWT.create(MainPage.class);
+                            RootPanel.get().add(mainPage.getElement());
+                        }
+                        else {
+                            Window.alert("ACCESS DENIED");
+                        }
+                    }
+                });
+            }
+        });
+
+*/
         //CompaniesPresenter companiesPresenter = GWT.create(CompaniesPresenter.class);
 /*        CellTable<Company> cellTable = companiesPresenter.getCellTable();
         TextColumn<Company> companyName = new TextColumn<Company>() {
@@ -142,7 +192,7 @@ public class StartPoint implements EntryPoint {
 
 
 
-        RootPanel.get().add(mainPage.getElement());
+
 
 /*
 

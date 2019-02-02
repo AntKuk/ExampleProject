@@ -18,3 +18,12 @@ body, td, a, div, .p {
     font-size: 35px;
     padding: 5px;
 }
+
+.field_error{
+    background-color: red;
+    width: 100px;
+}
+.field_ok{
+    background-color: transparent;
+    width: 100px;
+}

@@ -1,6 +1,7 @@
 package com.exampleproject.web.rest.server;
 
 import com.exampleproject.model.shared.*;
+import com.exampleproject.web.rest.dao.UserDao;
 import com.exampleproject.web.rest.entity.Bank;
 import com.exampleproject.web.rest.service.BankService;
 import com.exampleproject.web.rest.service.CompanyService;
@@ -21,6 +22,7 @@ public class RestExample {
     //private final DataBaseTest dataBaseTest;
     //private final CompanyDAO companyDAO;
     private final Map<String, ServiceDB<? extends BasicDto>> dtoMap;
+    private final UserDao userDao;
 /*
     @Autowired
     public RestExample(ApplicationContext applicationContext, DataBaseTest dataBaseTest, CompanyDAO companyDAO) {
@@ -32,13 +34,15 @@ public class RestExample {
 
 
     @Autowired
-    public RestExample(ApplicationContext applicationContext, List<ServiceDB<? extends BasicDto>> dtoList) {
+    public RestExample(ApplicationContext applicationContext, List<ServiceDB<? extends BasicDto>> dtoList, UserDao userDao) {
         this.applicationContext = applicationContext;
         this.dtoMap = new HashMap<String, ServiceDB<? extends BasicDto>>(dtoList.size());
 
         for (ServiceDB<? extends BasicDto> dto : dtoList) {
             dtoMap.put(dto.getEntityName(), dto);
         }
+
+        this.userDao = userDao;
     }
 /*
     @RequestMapping("/test")
@@ -167,6 +171,17 @@ public class RestExample {
     public void deleteTransact(@RequestBody Integer id) {
         ServiceDB<TransactDto> service = (TransactService) dtoMap.get("Transact");
         service.deleteById(id);
+    }
+
+    @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
+    public Boolean login(@RequestBody UserDto user) {
+       boolean isUser = userDao.isUser(user);
+
+        /* if(user.getLogin().equals("admin") & user.getPwd() == "admin".hashCode()) {
+            return true;
+        }
+        return false;*/
+        return isUser;
     }
 
 
