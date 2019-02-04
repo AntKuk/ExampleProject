@@ -3,10 +3,7 @@ package com.exampleproject.web.rest.server;
 import com.exampleproject.model.shared.*;
 import com.exampleproject.web.rest.dao.UserDao;
 import com.exampleproject.web.rest.entity.Bank;
-import com.exampleproject.web.rest.service.BankService;
-import com.exampleproject.web.rest.service.CompanyService;
-import com.exampleproject.web.rest.service.ServiceDB;
-import com.exampleproject.web.rest.service.TransactService;
+import com.exampleproject.web.rest.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +19,7 @@ public class RestExample {
     //private final DataBaseTest dataBaseTest;
     //private final CompanyDAO companyDAO;
     private final Map<String, ServiceDB<? extends BasicDto>> dtoMap;
-    private final UserDao userDao;
+    private final UserService userService;
 /*
     @Autowired
     public RestExample(ApplicationContext applicationContext, DataBaseTest dataBaseTest, CompanyDAO companyDAO) {
@@ -34,7 +31,7 @@ public class RestExample {
 
 
     @Autowired
-    public RestExample(List<ServiceDB<? extends BasicDto>> dtoList, UserDao userDao) {
+    public RestExample(List<ServiceDB<? extends BasicDto>> dtoList, UserService userService) {
 
         this.dtoMap = new HashMap<String, ServiceDB<? extends BasicDto>>(dtoList.size());
 
@@ -42,7 +39,7 @@ public class RestExample {
             dtoMap.put(dto.getEntityName(), dto);
         }
 
-        this.userDao = userDao;
+        this.userService = userService;
     }
 /*
     @RequestMapping("/test")
@@ -175,7 +172,7 @@ public class RestExample {
 
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
     public Boolean login(@RequestBody UserDto user) {
-       boolean isUser = userDao.isUser(user);
+       boolean isUser = userService.isUser(user);
 
         /* if(user.getLogin().equals("admin") & user.getPwd() == "admin".hashCode()) {
             return true;
@@ -184,5 +181,18 @@ public class RestExample {
         return isUser;
     }
 
+    @GetMapping(value = "/users", produces = "application/json")
+    public List<UserDto> getUsers() {
+        return userService.getAll();
+    }
 
+    @DeleteMapping(value = "/deleteUser", consumes = "application/json")
+    public void deleteUser(@RequestBody Integer id) {
+        userService.delete(id);
+    }
+
+    @PostMapping(value = "/addUser", consumes = "application/json")
+    public void addUser(@RequestBody UserDto user) {
+        userService.add(user);
+    }
 }

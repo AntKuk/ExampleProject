@@ -1,6 +1,7 @@
 package com.exampleproject.model.shared;
 
 public class UserDto implements BasicDto{
+    private Integer id;
     private String login;
     private Integer pwd;
 
@@ -10,6 +11,15 @@ public class UserDto implements BasicDto{
     public UserDto(String login, Integer pwd) {
         this.login = login;
         this.pwd = pwd;
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getLogin() {

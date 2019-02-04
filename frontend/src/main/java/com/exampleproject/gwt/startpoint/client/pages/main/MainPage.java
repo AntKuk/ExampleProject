@@ -5,6 +5,7 @@ import com.exampleproject.gwt.startpoint.client.pages.bank.BanksPresenter;
 import com.exampleproject.gwt.startpoint.client.pages.company.CompaniesPresenter;
 import com.exampleproject.gwt.startpoint.client.pages.handler.MenuBtnHandler;
 import com.exampleproject.gwt.startpoint.client.pages.transaction.TransactionsPresenter;
+import com.exampleproject.gwt.startpoint.client.pages.user.UserPresenter;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -26,11 +27,14 @@ public class MainPage {
     @UiField
     Button transactionsBtn;
     @UiField
+    Button usersBtn;
+    @UiField
     SimplePanel simplePanel;
 
     private CompaniesPresenter companiesPresenter;
     private BanksPresenter banksPresenter;
     private TransactionsPresenter transactionsPresenter;
+    private UserPresenter userPresenter;
     private boolean isAdmin = false;
     //private WorkerClient client;
 
@@ -39,6 +43,7 @@ public class MainPage {
         companiesPresenter = GWT.create(CompaniesPresenter.class);
         banksPresenter = GWT.create(BanksPresenter.class);
         transactionsPresenter = GWT.create(TransactionsPresenter.class);
+        userPresenter = GWT.create(UserPresenter.class);
         addButtonHandlers();
 
     }
@@ -50,6 +55,7 @@ public class MainPage {
             companiesPresenter.getDeleteButton().removeFromParent();
             banksPresenter.getDeleteButton().removeFromParent();
             transactionsPresenter.getDeleteButton().removeFromParent();
+            usersBtn.removeFromParent();
         }
     }
 
@@ -84,5 +90,6 @@ public class MainPage {
         banksBtn.addClickHandler(new MenuBtnHandler(this, banksPresenter));
         transactionsBtn.addClickHandler(new MenuBtnHandler(this, transactionsPresenter));
         companiesBtn.addClickHandler(new MenuBtnHandler(this, companiesPresenter));
+        usersBtn.addClickHandler(new MenuBtnHandler(this, userPresenter));
     }
 }

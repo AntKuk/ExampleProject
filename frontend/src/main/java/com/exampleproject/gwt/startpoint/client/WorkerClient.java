@@ -74,4 +74,7 @@ public interface WorkerClient extends RestService {
 	@Path("login")
 	void login(UserDto user, MethodCallback<Boolean> callback);
 
+	@GET
+	@Path("/users")
+	void getUsers(MethodCallback<List<UserDto>> callback);
 }
