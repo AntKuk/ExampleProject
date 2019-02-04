@@ -47,8 +47,13 @@ public class LoginPage {
             public void onSuccess(Method method, Boolean aBoolean) {
                 if(aBoolean) {
                     //dialogBox.hide();
-                    dialogBox.removeFromParent();
+
                     MainPage mainPage = GWT.create(MainPage.class);
+                    if(name.equals("admin")) {
+                        mainPage.setAdmin(true);
+                    }
+                    mainPage.loadPagesForRole();
+                    dialogBox.removeFromParent();
                     RootPanel.get().add(mainPage.getElement());
                 }
                 else {

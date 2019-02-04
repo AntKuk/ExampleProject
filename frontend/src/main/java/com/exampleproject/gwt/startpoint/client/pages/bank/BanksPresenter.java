@@ -160,4 +160,11 @@ public class BanksPresenter implements TabPresenter {
         return cellTable;
     }
 
+    public Button getDeleteButton() {
+        return deleteButton;
+    }
+
+    public void setDeleteButton(Button deleteButton) {
+        this.deleteButton = deleteButton;
+    }
 }

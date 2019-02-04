@@ -31,7 +31,8 @@ public class MainPage {
     private CompaniesPresenter companiesPresenter;
     private BanksPresenter banksPresenter;
     private TransactionsPresenter transactionsPresenter;
-    private WorkerClient client;
+    private boolean isAdmin = false;
+    //private WorkerClient client;
 
     public MainPage() {
         root = uiBinder.createAndBindUi(this);
@@ -39,8 +40,26 @@ public class MainPage {
         banksPresenter = GWT.create(BanksPresenter.class);
         transactionsPresenter = GWT.create(TransactionsPresenter.class);
         addButtonHandlers();
+
     }
 
+
+
+    public void loadPagesForRole() {
+        if(!isAdmin) {
+            companiesPresenter.getDeleteButton().removeFromParent();
+            banksPresenter.getDeleteButton().removeFromParent();
+            transactionsPresenter.getDeleteButton().removeFromParent();
+        }
+    }
+
+    public void setAdmin(boolean role) {
+        this.isAdmin = role;
+    }
+
+    public boolean isAdmin() {
+        return this.isAdmin;
+    }
     public SimplePanel getSimplePanel() {
         return simplePanel;
     }

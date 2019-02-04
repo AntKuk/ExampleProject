@@ -18,7 +18,7 @@ import java.util.Map;
 @RestController
 public class RestExample {
 
-    private final ApplicationContext applicationContext;
+    //private final ApplicationContext applicationContext;
     //private final DataBaseTest dataBaseTest;
     //private final CompanyDAO companyDAO;
     private final Map<String, ServiceDB<? extends BasicDto>> dtoMap;
@@ -34,8 +34,8 @@ public class RestExample {
 
 
     @Autowired
-    public RestExample(ApplicationContext applicationContext, List<ServiceDB<? extends BasicDto>> dtoList, UserDao userDao) {
-        this.applicationContext = applicationContext;
+    public RestExample(List<ServiceDB<? extends BasicDto>> dtoList, UserDao userDao) {
+
         this.dtoMap = new HashMap<String, ServiceDB<? extends BasicDto>>(dtoList.size());
 
         for (ServiceDB<? extends BasicDto> dto : dtoList) {

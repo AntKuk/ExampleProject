@@ -134,6 +134,10 @@ public class CompaniesPresenter implements TabPresenter {
         return cellTable;
     }
 
+    public Button getDeleteButton() {
+        return deleteButton;
+    }
+
     private void initTable() {
         idColumn = new TextColumn<CompanyDto>() {
             @Override
