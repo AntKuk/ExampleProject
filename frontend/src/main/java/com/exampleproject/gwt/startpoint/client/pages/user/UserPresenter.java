@@ -60,6 +60,37 @@ public class UserPresenter implements TabPresenter {
         userView.setUserPresenter(this);
     }
 
+    @UiHandler("deleteButton")
+    void delete(ClickEvent event) {
+        UserDto userDto = ((SingleSelectionModel<UserDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(userDto != null) {
+            client.deleteUser(userDto.getId(), new MethodCallback<Boolean>() {
+                @Override
+                public void onFailure(Method method, Throwable exception) {
+                    Window.alert(exception.toString() + "\n" + exception.getMessage());
+                }
+
+                @Override
+                public void onSuccess(Method method, Boolean aBoolean) {
+                    Window.alert("Deleted");
+                    client.getUsers(new MethodCallback<List<UserDto>>() {
+                        @Override
+                        public void onFailure(Method method, Throwable exception) {
+                            Window.alert(exception.toString() + "\n" + exception.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(Method method, List<UserDto> bankDto) {
+                            getCellTable().setRowData(bankDto);
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            Window.alert("Select bank");
+        }
+    }
+
     private void initTable() {
         idColumn = new TextColumn<UserDto>() {
             @Override

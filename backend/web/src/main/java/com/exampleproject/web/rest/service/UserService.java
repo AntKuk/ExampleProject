@@ -24,9 +24,14 @@ public class UserService {
         return userDao.isUser(user);
     }
 
-    public void add(UserDto userDto) {
-        User user = new User(userDto.getLogin(), userDto.getPwd());
-        userDao.add(user);
+    public boolean add(UserDto userDto) {
+        if(!isUser(userDto)) {
+            User user = new User(userDto.getLogin(), userDto.getPwd());
+            userDao.add(user);
+            return true;
+        }
+        return false;
+
     }
 
     public List<UserDto> getAll() {

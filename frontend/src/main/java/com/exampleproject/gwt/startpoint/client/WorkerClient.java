@@ -81,4 +81,8 @@ public interface WorkerClient extends RestService {
 	@POST
 	@Path("addUser")
 	void addUser(UserDto userDto, MethodCallback<Boolean> callback);
+
+	@DELETE
+	@Path("deleteUser")
+	void deleteUser(Integer id, MethodCallback callback);
 }

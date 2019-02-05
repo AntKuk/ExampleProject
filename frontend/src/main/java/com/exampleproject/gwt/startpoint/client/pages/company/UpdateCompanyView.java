@@ -29,7 +29,7 @@ public class UpdateCompanyView extends AddCompanyView {
     void add(ClickEvent event) {
         final WorkerClient client = GWT.create(WorkerClient.class);
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
-        CompanyDto companyDto = createDto();
+        CompanyDto companyDto = createDto(false);
         companyDto.setId(this.id);
         client.updateCompany(companyDto, new MethodCallback<Boolean>() {
             @Override
@@ -67,6 +67,7 @@ public class UpdateCompanyView extends AddCompanyView {
         getEmail().setText(companyDto.getEmail());
         getTel().setText(Integer.toString(companyDto.getTelNumber()));
         //getBankAcc().setText(Integer.toString(companyDto.getAcc().getCorAcc()));
-
     }
+
+
 }

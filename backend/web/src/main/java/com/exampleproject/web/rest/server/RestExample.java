@@ -139,6 +139,8 @@ public class RestExample {
         service.updateById(companyDto);
     }
 
+
+
     @PostMapping(value = "/addBank", consumes = "application/json")
     public void addBank(@RequestBody BankDto entity) {
         ServiceDB<BankDto> service = (BankService) dtoMap.get("Bank");
@@ -156,6 +158,8 @@ public class RestExample {
         ServiceDB<BankDto> service = (BankService) dtoMap.get("Bank");
         service.updateById(bankDto);
     }
+
+
 
 
     @PostMapping(value = "/addTransact", consumes = "application/json")
@@ -181,6 +185,8 @@ public class RestExample {
         return isUser;
     }
 
+
+
     @GetMapping(value = "/users", produces = "application/json")
     public List<UserDto> getUsers() {
         return userService.getAll();
@@ -193,7 +199,6 @@ public class RestExample {
 
     @PostMapping(value = "/addUser", consumes = "application/json")
     public Boolean addUser(@RequestBody UserDto user) {
-        userService.add(user);
-        return true;
+        return userService.add(user);
     }
 }

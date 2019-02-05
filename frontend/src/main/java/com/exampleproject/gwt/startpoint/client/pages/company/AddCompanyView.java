@@ -55,10 +55,12 @@ public class AddCompanyView {
 
     private DialogBox dialogBox;
     private CompaniesPresenter companiesPresenter;
+    private Validator validator;
 
     public AddCompanyView() {
         dialogBox = uiBinder.createAndBindUi(this);
         //this.companiesPresenter = companiesPresenter;
+        this.validator = new Validator();
 
         dialogBox.setText("Adding company");
         dialogBox.setAnimationEnabled(true);
@@ -93,8 +95,8 @@ public class AddCompanyView {
     void add(ClickEvent event) {
 
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
-        if(new Validator().isEmail(email.getText())) {
-            CompanyDto companyDto = createDto();
+        if(isValid()) {
+            CompanyDto companyDto = createDto(true);
             client.addCompany(companyDto, new MethodCallback<Boolean>() {
                 @Override
                 public void onFailure(Method method, Throwable exception) {
@@ -118,11 +120,11 @@ public class AddCompanyView {
             });
         }
         else {
-            Window.alert("Email is incorrect!");
+            Window.alert(validator.getErrorString());
+            validator.resetErrorString();
         }
-
-
     }
+
 
     private void setListBox() {
         client.getAllBanks(new MethodCallback<List<BankDto>>() {
@@ -141,9 +143,7 @@ public class AddCompanyView {
     }
 
 
-
-
-    protected CompanyDto createDto() {
+    protected CompanyDto createDto(boolean isNew) {
         CompanyDto companyDto = new CompanyDto();
         companyDto.setCompanyName(companyName.getText());
         companyDto.setAddress(companyAddress.getText());
@@ -152,10 +152,9 @@ public class AddCompanyView {
         companyDto.setEmail(email.getText());
         companyDto.setTelNumber(Integer.parseInt(tel.getText()));
         companyDto.setId(0);
-
-        companyDto.setAcc(createAcc());
-
-
+        if (isNew) {
+            companyDto.setAcc(createAcc());
+        }
         return companyDto;
     }
 
@@ -167,6 +166,14 @@ public class AddCompanyView {
 
         return acc;
     }
+
+    private boolean isValid() {
+        return validator.isTin(tin.getText())
+                & validator.isEmail(email.getText())
+                & validator.isIec(iec.getText())
+                & validator.isTel(tel.getText());
+    }
+
 
     public void setCompaniesPresenter(CompaniesPresenter companiesPresenter) {
         this.companiesPresenter = companiesPresenter;
