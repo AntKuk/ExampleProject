@@ -4,8 +4,10 @@ import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.gwt.startpoint.client.presenter.TabPresenter;
 import com.exampleproject.model.shared.UserDto;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
@@ -50,6 +52,12 @@ public class UserPresenter implements TabPresenter {
                 cellTable.setRowData(userDtos);
             }
         });
+    }
+
+    @UiHandler("addButton")
+    void add(ClickEvent event) {
+        AddUserView userView = GWT.create(AddUserView.class);
+        userView.setUserPresenter(this);
     }
 
     private void initTable() {

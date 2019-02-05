@@ -1,17 +1,13 @@
 package com.exampleproject.gwt.startpoint.client.pages.main;
 
-import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.gwt.startpoint.client.pages.bank.BanksPresenter;
 import com.exampleproject.gwt.startpoint.client.pages.company.CompaniesPresenter;
-import com.exampleproject.gwt.startpoint.client.pages.handler.MenuBtnHandler;
+import com.exampleproject.gwt.startpoint.client.handler.MenuBtnHandler;
 import com.exampleproject.gwt.startpoint.client.pages.transaction.TransactionsPresenter;
 import com.exampleproject.gwt.startpoint.client.pages.user.UserPresenter;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 
 public class MainPage {

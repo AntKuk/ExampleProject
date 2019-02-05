@@ -1,4 +1,4 @@
-package com.exampleproject.gwt.startpoint.client.pages.handler;
+package com.exampleproject.gwt.startpoint.client.handler;
 
 import com.exampleproject.gwt.startpoint.client.pages.main.MainPage;
 import com.exampleproject.gwt.startpoint.client.presenter.TabPresenter;

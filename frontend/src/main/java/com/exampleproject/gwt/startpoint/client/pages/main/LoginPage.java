@@ -4,6 +4,9 @@ import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.model.shared.UserDto;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -25,11 +28,13 @@ public class LoginPage {
     @UiField
     Button ok;
 
+
     private DialogBox dialogBox;
 
     public LoginPage() {
         dialogBox = uiBinder.createAndBindUi(this);
         dialogBox.show();
+        loginTB.setFocus(true);
     }
 
     @UiHandler("ok")
@@ -37,29 +42,41 @@ public class LoginPage {
         String name = loginTB.getText();
         Integer p = pwdTB.getText().hashCode();
         UserDto user = new UserDto(name, p);
-        client.login(user, new MethodCallback<Boolean>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
+        client.login(user, new LoginMethodCallback());
+    }
+
+
+    @UiHandler("pwdTB")
+    void enter(KeyDownEvent event) {
+        if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+            UserDto user = new UserDto(loginTB.getText(), pwdTB.getText().hashCode());
+            client.login(user, new LoginMethodCallback());
+        }
+    }
+
+    private class LoginMethodCallback implements MethodCallback<Boolean> {
+        @Override
+        public void onFailure(Method method, Throwable throwable) {
+            Window.alert("ACCESS DENIED");
+        }
+
+        @Override
+        public void onSuccess(Method method, Boolean aBoolean) {
+            if(aBoolean) {
+                //dialogBox.hide();
+
+                MainPage mainPage = GWT.create(MainPage.class);
+                if(loginTB.getText().equals("admin")) {
+                    mainPage.setAdmin(true);
+                }
+                mainPage.loadPagesForRole();
+                dialogBox.removeFromParent();
+                RootPanel.get().add(mainPage.getElement());
+            }
+            else {
                 Window.alert("ACCESS DENIED");
             }
-
-            @Override
-            public void onSuccess(Method method, Boolean aBoolean) {
-                if(aBoolean) {
-                    //dialogBox.hide();
-
-                    MainPage mainPage = GWT.create(MainPage.class);
-                    if(name.equals("admin")) {
-                        mainPage.setAdmin(true);
-                    }
-                    mainPage.loadPagesForRole();
-                    dialogBox.removeFromParent();
-                    RootPanel.get().add(mainPage.getElement());
-                }
-                else {
-                    Window.alert("ACCESS DENIED");
-                }
-            }
-        });
+        }
     }
+
 }

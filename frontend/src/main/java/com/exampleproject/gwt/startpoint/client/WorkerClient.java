@@ -77,4 +77,8 @@ public interface WorkerClient extends RestService {
 	@GET
 	@Path("/users")
 	void getUsers(MethodCallback<List<UserDto>> callback);
+
+	@POST
+	@Path("addUser")
+	void addUser(UserDto userDto, MethodCallback<Boolean> callback);
 }

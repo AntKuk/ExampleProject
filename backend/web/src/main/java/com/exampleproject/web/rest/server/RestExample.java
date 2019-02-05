@@ -192,7 +192,8 @@ public class RestExample {
     }
 
     @PostMapping(value = "/addUser", consumes = "application/json")
-    public void addUser(@RequestBody UserDto user) {
+    public Boolean addUser(@RequestBody UserDto user) {
         userService.add(user);
+        return true;
     }
 }
