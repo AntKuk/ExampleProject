@@ -19,13 +19,13 @@ public class Company implements BasicEntity{
     private String address;
 
     @Column(name = "tin", nullable = false)
-    private int tin;
+    private long tin;
 
     @Column(name = "iec", nullable = false)
-    private int iec;
+    private long iec;
 
     @Column(name = "tel", nullable = false)
-    private int telNumber;
+    private long telNumber;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -33,7 +33,7 @@ public class Company implements BasicEntity{
     public Company() {
     }
 
-    public Company(String companyName, String address, int tin, int iec, int telNumber, String email) {
+    public Company(String companyName, String address, long tin, long iec, long telNumber, String email) {
         this.companyName = companyName;
         this.address = address;
         this.tin = tin;
@@ -66,27 +66,27 @@ public class Company implements BasicEntity{
         this.address = address;
     }
 
-    public int getTin() {
+    public long getTin() {
         return tin;
     }
 
-    public void setTin(int tin) {
+    public void setTin(long tin) {
         this.tin = tin;
     }
 
-    public int getIec() {
+    public long getIec() {
         return iec;
     }
 
-    public void setIec(int iec) {
+    public void setIec(long iec) {
         this.iec = iec;
     }
 
-    public int getTelNumber() {
+    public long getTelNumber() {
         return telNumber;
     }
 
-    public void setTelNumber(int telNumber) {
+    public void setTelNumber(long telNumber) {
         this.telNumber = telNumber;
     }
 

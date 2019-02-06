@@ -163,21 +163,21 @@ public class CompaniesPresenter implements TabPresenter {
         tinColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
-                return Integer.toString(companyDto.getTin());
+                return Long.toString(companyDto.getTin());
             }
         };
 
         iecColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
-                return Integer.toString(companyDto.getIec());
+                return Long.toString(companyDto.getIec());
             }
         };
 
         telColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
-                return Integer.toString(companyDto.getTelNumber());
+                return Long.toString(companyDto.getTelNumber());
             }
         };
 

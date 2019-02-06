@@ -87,8 +87,11 @@ public class TransactService implements ServiceDB<TransactDto> {
         transactDao.setIdSeller(companyDao.getByName(transactDto.getSeller()));
         transactDao.setTotal(transactDto.getTotal());
         transactDao.setTranDate(new Date());
-        transactDao.setSellerAcc(bankAccountDao.getByName(Integer.toString(companyDao.getByName(transactDto.getSeller()).getId().intValue())));
-        transactDao.setCustomerAcc(bankAccountDao.getByName(Integer.toString(companyDao.getByName(transactDto.getCustomer()).getId().intValue())));
+        transactDao.setSellerAcc(bankAccountDao.getObject(BigInteger.valueOf(transactDto.getSellerAcc())));
+        transactDao.setCustomerAcc(bankAccountDao.getObject(BigInteger.valueOf(transactDto.getCustomerAcc())));
+
+        //transactDao.setSellerAcc(bankAccountDao.getByName(Integer.toString(companyDao.getByName(transactDto.getSeller()).getId().intValue())));
+        //transactDao.setCustomerAcc(bankAccountDao.getByName(Integer.toString(companyDao.getByName(transactDto.getCustomer()).getId().intValue())));
         return transactDao;
     }
 }

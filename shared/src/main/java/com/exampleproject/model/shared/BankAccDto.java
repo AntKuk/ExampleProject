@@ -3,40 +3,40 @@ package com.exampleproject.model.shared;
 import java.math.BigInteger;
 
 public class BankAccDto implements BasicDto{
-    private int corAcc;
-    private String idBank;
-    private String idCom;
+    private Long corAcc;
+    private String bankName;
+    private String comName;
 
     public BankAccDto() {
     }
 
-    public BankAccDto(int corAcc, String idBank, String idCom) {
+    public BankAccDto(long corAcc, String bankName, String comName) {
         this.corAcc = corAcc;
-        this.idBank = idBank;
-        this.idCom = idCom;
+        this.bankName = bankName;
+        this.comName = comName;
     }
 
-    public int getCorAcc() {
+    public Long getCorAcc() {
         return corAcc;
     }
 
-    public void setCorAcc(int corAcc) {
+    public void setCorAcc(Long corAcc) {
         this.corAcc = corAcc;
     }
 
-    public String getIdBank() {
-        return idBank;
+    public String getBankName() {
+        return bankName;
     }
 
-    public void setIdBank(String idBank) {
-        this.idBank = idBank;
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
     }
 
-    public String getIdCom() {
-        return idCom;
+    public String getComName() {
+        return comName;
     }
 
-    public void setIdCom(String idCom) {
-        this.idCom = idCom;
+    public void setComName(String comName) {
+        this.comName = comName;
     }
 }

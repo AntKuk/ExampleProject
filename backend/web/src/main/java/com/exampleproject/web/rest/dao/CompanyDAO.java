@@ -54,6 +54,10 @@ public class CompanyDAO extends BasicDAO implements Dao<Company> {
         return (Company) criteria.uniqueResult();
     }
 
+    @Override
+    public List<Company> getAccsById(Integer id) {
+        return null;
+    }
 
 
 }

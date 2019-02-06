@@ -58,6 +58,6 @@ public class UpdateBankView extends AddBankView {
         this.id = bankDto.getId();
         getBankName().setText(bankDto.getBankName());
         getBankCity().setText(bankDto.getCity());
-        getBankBic().setText(Integer.toString(bankDto.getBic()));
+        getBankBic().setText(Long.toString(bankDto.getBic()));
     }
 }

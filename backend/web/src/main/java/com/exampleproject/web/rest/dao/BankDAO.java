@@ -55,5 +55,10 @@ public class BankDAO extends BasicDAO implements Dao<Bank> {
         return (Bank) criteria.uniqueResult();
     }
 
+    @Override
+    public List<Bank> getAccsById(Integer id) {
+        return null;
+    }
+
 
 }

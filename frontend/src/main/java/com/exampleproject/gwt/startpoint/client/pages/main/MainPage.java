@@ -1,5 +1,6 @@
 package com.exampleproject.gwt.startpoint.client.pages.main;
 
+import com.exampleproject.gwt.startpoint.client.pages.account.AccountsPresenter;
 import com.exampleproject.gwt.startpoint.client.pages.bank.BanksPresenter;
 import com.exampleproject.gwt.startpoint.client.pages.company.CompaniesPresenter;
 import com.exampleproject.gwt.startpoint.client.handler.MenuBtnHandler;
@@ -21,6 +22,8 @@ public class MainPage {
     @UiField
     Button banksBtn;
     @UiField
+    Button accountsBtn;
+    @UiField
     Button transactionsBtn;
     @UiField
     Button usersBtn;
@@ -29,6 +32,7 @@ public class MainPage {
 
     private CompaniesPresenter companiesPresenter;
     private BanksPresenter banksPresenter;
+    private AccountsPresenter accsPresenter;
     private TransactionsPresenter transactionsPresenter;
     private UserPresenter userPresenter;
     private boolean isAdmin = false;
@@ -38,6 +42,7 @@ public class MainPage {
         root = uiBinder.createAndBindUi(this);
         companiesPresenter = GWT.create(CompaniesPresenter.class);
         banksPresenter = GWT.create(BanksPresenter.class);
+        accsPresenter = GWT.create(AccountsPresenter.class);
         transactionsPresenter = GWT.create(TransactionsPresenter.class);
         userPresenter = GWT.create(UserPresenter.class);
         addButtonHandlers();
@@ -84,6 +89,7 @@ public class MainPage {
 
     private void addButtonHandlers() {
         banksBtn.addClickHandler(new MenuBtnHandler(this, banksPresenter));
+        accountsBtn.addClickHandler(new MenuBtnHandler(this, accsPresenter));
         transactionsBtn.addClickHandler(new MenuBtnHandler(this, transactionsPresenter));
         companiesBtn.addClickHandler(new MenuBtnHandler(this, companiesPresenter));
         usersBtn.addClickHandler(new MenuBtnHandler(this, userPresenter));

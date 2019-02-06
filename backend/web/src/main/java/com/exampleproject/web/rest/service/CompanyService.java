@@ -87,8 +87,8 @@ public class CompanyService implements ServiceDB<CompanyDto> {
     private BankAccount createAcc(CompanyDto companyDto) {
         BankAccount acc = new BankAccount();
         acc.setCorAcc(BigInteger.valueOf(companyDto.getAcc().getCorAcc()));
-        acc.setIdCom(companyDao.getByName(companyDto.getAcc().getIdCom()).getId().intValue());
-        acc.setIdBank(bankDao.getByName(companyDto.getAcc().getIdBank()).getId().intValue());
+        acc.setIdCom(companyDao.getByName(companyDto.getAcc().getComName()).getId().intValue());
+        acc.setIdBank(bankDao.getByName(companyDto.getAcc().getBankName()).getId().intValue());
 
         return acc;
     }

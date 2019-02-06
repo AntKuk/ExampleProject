@@ -1,8 +1,8 @@
-package com.exampleproject.gwt.startpoint.client.pages.bank;
+package com.exampleproject.gwt.startpoint.client.pages.account;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.gwt.startpoint.client.presenter.TabPresenter;
-import com.exampleproject.model.shared.BankDto;
+import com.exampleproject.model.shared.BankAccDto;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -20,12 +20,12 @@ import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.List;
 
-public class BanksPresenter implements TabPresenter {
-    interface MyUiBinder extends UiBinder<VerticalPanel, BanksPresenter> {}
+public class AccountsPresenter implements TabPresenter {
+    interface MyUiBinder extends UiBinder<VerticalPanel, AccountsPresenter> {}
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
     private final WorkerClient client = GWT.create(WorkerClient.class);
-    private final SingleSelectionModel<BankDto> selectionModel = new SingleSelectionModel<>();
+    private final SingleSelectionModel<BankAccDto> selectionModel = new SingleSelectionModel<>();
 
     @UiField
     CellTable cellTable;
@@ -33,47 +33,43 @@ public class BanksPresenter implements TabPresenter {
     Button addButton;
     @UiField
     Button deleteButton;
-    @UiField
-    Button updateButton;
 
-    private TextColumn<BankDto> idColumn;
-    private TextColumn<BankDto> nameColumn;
-    private TextColumn<BankDto> cityColumn;
-    private TextColumn<BankDto> bicColumn;
+    private TextColumn<BankAccDto> accColumn;
+    private TextColumn<BankAccDto> bankColumn;
+    private TextColumn<BankAccDto> comColumn;
 
 
     private VerticalPanel root;
 
-    public BanksPresenter() {
+    public AccountsPresenter() {
         root = uiBinder.createAndBindUi(this);
         initTable();
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
-        client.getAllBanks(new MethodCallback<List<BankDto>>() {
+        client.getAllAccounts(new MethodCallback<List<BankAccDto>>() {
             @Override
             public void onFailure(Method method, Throwable exception) {
                 Window.alert(exception.toString() + "\n" + exception.getMessage());
             }
 
             @Override
-            public void onSuccess(Method method, List<BankDto> bankDto) {
+            public void onSuccess(Method method, List<BankAccDto> bankAccDto) {
 
-                cellTable.setRowData(bankDto);
+                cellTable.setRowData(bankAccDto);
             }
         });
     }
 
     @UiHandler("addButton")
     void addBtn(ClickEvent event) {
-        AddBankView addBankView = GWT.create(AddBankView.class);
-        addBankView.setBanksPresenter(this);
+        AddAccountView addAccountView = GWT.create(AddAccountView.class);
+        addAccountView.setAccountsPresenter(this);
     }
 
     @UiHandler("deleteButton")
     void deleteBtn(ClickEvent event) {
-        BankDto bankDto = ((SingleSelectionModel<BankDto>)cellTable.getSelectionModel()).getSelectedObject();
-        if(bankDto != null) {
-            Window.alert("Selected" + bankDto.getBankName());
-            client.deleteBank(bankDto.getId(), new MethodCallback<Boolean>() {
+        BankAccDto bankAccDto = ((SingleSelectionModel<BankAccDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(bankAccDto != null) {
+            client.deleteAccount(bankAccDto.getCorAcc(), new MethodCallback<Boolean>() {
                 @Override
                 public void onFailure(Method method, Throwable exception) {
                     Window.alert(exception.toString() + "\n" + exception.getMessage());
@@ -82,14 +78,14 @@ public class BanksPresenter implements TabPresenter {
                 @Override
                 public void onSuccess(Method method, Boolean aBoolean) {
                     Window.alert("Deleted");
-                    client.getAllBanks(new MethodCallback<List<BankDto>>() {
+                    client.getAllAccounts(new MethodCallback<List<BankAccDto>>() {
                         @Override
                         public void onFailure(Method method, Throwable exception) {
                             Window.alert(exception.toString() + "\n" + exception.getMessage());
                         }
                         @Override
-                        public void onSuccess(Method method, List<BankDto> bankDto) {
-                            getCellTable().setRowData(bankDto);
+                        public void onSuccess(Method method, List<BankAccDto> bankAccDtos) {
+                            getCellTable().setRowData(bankAccDtos);
                         }
                     });
                 }
@@ -100,54 +96,31 @@ public class BanksPresenter implements TabPresenter {
         }
     }
 
-    @UiHandler("updateButton")
-    void updateBtn(ClickEvent event) {
-        BankDto bankDto = ((SingleSelectionModel<BankDto>)cellTable.getSelectionModel()).getSelectedObject();
-        if(bankDto != null) {
-            UpdateBankView updateBankView = GWT.create(UpdateBankView.class);
-            updateBankView.setBanksPresenter(this);
-            updateBankView.fillTextFields(bankDto);
-        }
-        else {
-            Window.alert("Select bank");
-        }
-    }
-
-
-
     private void initTable() {
-        idColumn = new TextColumn<BankDto>() {
+        accColumn = new TextColumn<BankAccDto>() {
             @Override
-            public String getValue(BankDto bankDto) {
-                return Integer.toString(bankDto.getId());
+            public String getValue(BankAccDto bankAccDto) {
+                return Long.toString(bankAccDto.getCorAcc());
             }
         };
 
-        nameColumn = new TextColumn<BankDto>() {
+        bankColumn = new TextColumn<BankAccDto>() {
             @Override
-            public String getValue(BankDto bankDto) {
-                return bankDto.getBankName();
+            public String getValue(BankAccDto bankAccDto) {
+                return bankAccDto.getBankName();
             }
         };
 
-        cityColumn = new TextColumn<BankDto>() {
+        comColumn = new TextColumn<BankAccDto>() {
             @Override
-            public String getValue(BankDto bankDto) {
-                return bankDto.getCity();
+            public String getValue(BankAccDto bankAccDto) {
+                return bankAccDto.getComName();
             }
         };
 
-        bicColumn = new TextColumn<BankDto>() {
-            @Override
-            public String getValue(BankDto bankDto) {
-                return Long.toString(bankDto.getBic());
-            }
-        };
-
-        cellTable.addColumn(idColumn, "Id");
-        cellTable.addColumn(nameColumn, "Name");
-        cellTable.addColumn(cityColumn, "City");
-        cellTable.addColumn(bicColumn, "BIC");
+        cellTable.addColumn(accColumn, "Correspondence account");
+        cellTable.addColumn(bankColumn, "Bank");
+        cellTable.addColumn(comColumn, "Company");
 
         cellTable.setSelectionModel(selectionModel);
     }
@@ -162,9 +135,5 @@ public class BanksPresenter implements TabPresenter {
 
     public Button getDeleteButton() {
         return deleteButton;
-    }
-
-    public void setDeleteButton(Button deleteButton) {
-        this.deleteButton = deleteButton;
     }
 }

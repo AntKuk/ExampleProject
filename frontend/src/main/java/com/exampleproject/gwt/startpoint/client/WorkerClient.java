@@ -15,7 +15,7 @@ import java.util.List;
 
 
 public interface WorkerClient extends RestService {
-
+/*
 	@GET
 	@Path("/test")
 	void get(MethodCallback<TestDto> callback);
@@ -23,7 +23,7 @@ public interface WorkerClient extends RestService {
 	@GET
 	@Path("/testDb")
 	void getDb(MethodCallback<Boolean> callback);
-
+*/
 	@GET
 	@Path("/Company")
 	void getAllCompanies(MethodCallback<List<CompanyDto>> callback);
@@ -35,6 +35,10 @@ public interface WorkerClient extends RestService {
 	@GET
 	@Path("/Transact")
 	void getAllTransacts(MethodCallback<List<TransactDto>> callback);
+
+	@GET
+	@Path("/BankAccount")
+	void getAllAccounts(MethodCallback<List<BankAccDto>> callback);
 
 
 
@@ -85,4 +89,16 @@ public interface WorkerClient extends RestService {
 	@DELETE
 	@Path("deleteUser")
 	void deleteUser(Integer id, MethodCallback callback);
+
+	@POST
+	@Path("/addAccount")
+	void addAccount(BankAccDto bankAccDto, MethodCallback<Boolean> callback);
+
+	@DELETE
+	@Path("deleteAccount")
+	void deleteAccount(Long id, MethodCallback callback);
+
+	@POST
+	@Path("/getAccounts")
+	void getAccounts(String companyName, MethodCallback<List<BankAccDto>> callback);
 }

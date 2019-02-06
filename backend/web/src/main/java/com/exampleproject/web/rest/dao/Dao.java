@@ -15,4 +15,5 @@ public interface Dao<T extends BasicEntity> {
     int deleteById(int id);
     void updateById(T entity);
     T getByName(String name);
+    List<T> getAccsById(Integer id);
 }

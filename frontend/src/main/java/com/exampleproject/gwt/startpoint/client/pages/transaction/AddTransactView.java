@@ -2,6 +2,7 @@ package com.exampleproject.gwt.startpoint.client.pages.transaction;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.gwt.startpoint.client.pages.bank.BanksPresenter;
+import com.exampleproject.model.shared.BankAccDto;
 import com.exampleproject.model.shared.BankDto;
 import com.exampleproject.model.shared.CompanyDto;
 import com.exampleproject.model.shared.TransactDto;
@@ -19,6 +20,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddTransactView {
@@ -37,6 +39,10 @@ public class AddTransactView {
     ListBox customerName;
     @UiField
     TextBox total;
+    @UiField
+    ListBox customerAcc;
+    @UiField
+    ListBox sellerAcc;
 
 
 
@@ -92,12 +98,28 @@ public class AddTransactView {
         });
     }
 
+    @UiHandler("sellerName")
+    void sellerChanged(ChangeEvent event) {
+        //List<BankAccDto> list = new ArrayList<>();
+        sellerAcc.clear();
+        client.getAccounts(sellerName.getSelectedItemText(), new ListMethodCallback(sellerAcc));
+    }
+
+    @UiHandler("customerName")
+    void customerChanged(ChangeEvent event) {
+        //List<BankAccDto> list = new ArrayList<>();
+        customerAcc.clear();
+        client.getAccounts(customerName.getSelectedItemText(), new ListMethodCallback(customerAcc));
+    }
+
 
     protected TransactDto createDto() {
         TransactDto transactDto = new TransactDto();
         transactDto.setSeller(sellerName.getSelectedItemText());
         transactDto.setCustomer(customerName.getSelectedItemText());
         transactDto.setTotal(Integer.parseInt(total.getText()));
+        transactDto.setCustomerAcc(Long.parseLong(customerAcc.getSelectedItemText()));
+        transactDto.setSellerAcc(Long.parseLong(sellerAcc.getSelectedItemText()));
 
         return transactDto;
     }
@@ -167,5 +189,23 @@ public class AddTransactView {
 
     public void setTransactionsPresenter(TransactionsPresenter transactionsPresenter) {
         this.transactionsPresenter = transactionsPresenter;
+    }
+
+    private class ListMethodCallback implements MethodCallback<List<BankAccDto>> {
+        ListBox listBox;
+        ListMethodCallback(ListBox listBox) {
+            this.listBox = listBox;
+        }
+        @Override
+        public void onFailure(Method method, Throwable exception) {
+            Window.alert(exception.toString() + "\n" + exception.getMessage());
+        }
+
+        @Override
+        public void onSuccess(Method method, List<BankAccDto> bankAccDtos) {
+            for(BankAccDto bankAccDto : bankAccDtos) {
+                listBox.addItem(Long.toString(bankAccDto.getCorAcc()));
+            }
+        }
     }
 }

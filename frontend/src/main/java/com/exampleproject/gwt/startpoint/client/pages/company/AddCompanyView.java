@@ -95,6 +95,7 @@ public class AddCompanyView {
     void add(ClickEvent event) {
 
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
+        validator.resetErrorString();
         if(isValid()) {
             CompanyDto companyDto = createDto(true);
             client.addCompany(companyDto, new MethodCallback<Boolean>() {
@@ -147,10 +148,10 @@ public class AddCompanyView {
         CompanyDto companyDto = new CompanyDto();
         companyDto.setCompanyName(companyName.getText());
         companyDto.setAddress(companyAddress.getText());
-        companyDto.setIec(Integer.parseInt(iec.getText()));
-        companyDto.setTin(Integer.parseInt(tin.getText()));
+        companyDto.setIec(Long.parseLong(iec.getText()));
+        companyDto.setTin(Long.parseLong(tin.getText()));
         companyDto.setEmail(email.getText());
-        companyDto.setTelNumber(Integer.parseInt(tel.getText()));
+        companyDto.setTelNumber(Long.parseLong(tel.getText()));
         companyDto.setId(0);
         if (isNew) {
             companyDto.setAcc(createAcc());
@@ -160,9 +161,9 @@ public class AddCompanyView {
 
     protected BankAccDto createAcc() {
         BankAccDto acc = new BankAccDto();
-        acc.setIdBank(bank.getSelectedItemText());
-        acc.setIdCom(companyName.getText());
-        acc.setCorAcc(Integer.parseInt(bankAcc.getText()));
+        acc.setBankName(bank.getSelectedItemText());
+        acc.setComName(companyName.getText());
+        acc.setCorAcc(Long.parseLong(bankAcc.getText()));
 
         return acc;
     }

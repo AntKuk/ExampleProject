@@ -84,7 +84,7 @@ public class AddBankView {
         BankDto bankDto = new BankDto();
         bankDto.setBankName(bankName.getText());
         bankDto.setCity(bankCity.getText());
-        bankDto.setBic(Integer.parseInt(bankBic.getText()));
+        bankDto.setBic(Long.parseLong(bankBic.getText()));
         return  bankDto;
     }
 

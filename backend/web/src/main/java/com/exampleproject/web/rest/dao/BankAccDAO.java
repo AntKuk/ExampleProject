@@ -47,9 +47,18 @@ public class BankAccDAO extends BasicDAO implements Dao<BankAccount> {
 
     @Override
     public BankAccount getByName(String name) {
-        Criteria criteria = getSession().createCriteria(BankAccount.class);
+    /*    Criteria criteria = getSession().createCriteria(BankAccount.class);
         criteria.add(Restrictions.eq("idCom", Integer.parseInt(name)));
-        return (BankAccount) criteria.uniqueResult();
+        return (BankAccount) criteria.uniqueResult();*/
+    return null;
+    }
+
+    public List<BankAccount> getAccsById(Integer id) {
+        Criteria criteria = getSession().createCriteria(BankAccount.class);
+        criteria.add(Restrictions.eq("idCom", id));
+        List list = criteria.list();
+        return criteria.list();
+
     }
 
 

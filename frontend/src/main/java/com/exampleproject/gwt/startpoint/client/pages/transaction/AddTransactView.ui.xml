@@ -9,6 +9,10 @@
             <g:Label>Customer</g:Label>
             <g:ListBox ui:field="customerName"/>
             <g:Label>Total</g:Label>
+            <g:Label>Customer Account</g:Label>
+            <g:ListBox ui:field="customerAcc"/>
+            <g:Label>Seller Account</g:Label>
+            <g:ListBox ui:field="sellerAcc"/>
             <g:TextBox ui:field="total"/>
             <g:Button ui:field="ok">Ok</g:Button>
             <g:Button ui:field="cancel">Cancel</g:Button>

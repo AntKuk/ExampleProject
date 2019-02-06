@@ -19,13 +19,13 @@ public class Bank implements BasicEntity{
     private String city;
 
     @Column(name = "bic", nullable = false)
-    private int bic;
+    private long bic;
 
 
     public Bank() {
     }
 
-    public Bank(String bankName, String city, int bic) {
+    public Bank(String bankName, String city, long bic) {
         this.bankName = bankName;
         this.city = city;
         this.bic = bic;
@@ -55,11 +55,11 @@ public class Bank implements BasicEntity{
         this.city = city;
     }
 
-    public int getBic() {
+    public long getBic() {
         return bic;
     }
 
-    public void setBic(int bic) {
+    public void setBic(long bic) {
         this.bic = bic;
     }
 

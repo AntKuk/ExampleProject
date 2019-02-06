@@ -20,6 +20,7 @@ public class RestExample {
     //private final CompanyDAO companyDAO;
     private final Map<String, ServiceDB<? extends BasicDto>> dtoMap;
     private final UserService userService;
+    //private final BankAccountService bankAccountService;
 /*
     @Autowired
     public RestExample(ApplicationContext applicationContext, DataBaseTest dataBaseTest, CompanyDAO companyDAO) {
@@ -201,4 +202,25 @@ public class RestExample {
     public Boolean addUser(@RequestBody UserDto user) {
         return userService.add(user);
     }
+
+
+    @PostMapping(value = "/addAccount", consumes = "application/json")
+    public void addAccount(@RequestBody BankAccDto entity) {
+        ServiceDB<BankAccDto> service = (BankAccountService) dtoMap.get("BankAccount");
+        service.add(entity);
+    }
+
+    @DeleteMapping(value = "/deleteAccount", consumes = "application/json")
+    public void deleteAccount(@RequestBody Long id) {
+        ServiceDB<BankAccDto> service = (BankAccountService) dtoMap.get("BankAccount");
+        service.deleteById(id.intValue());
+    }
+
+
+    @PostMapping(value = "/getAccounts", consumes = "text/plain", produces = "application/json")
+    public List<BankAccDto> getAccount(@RequestBody String companyName) {
+        ServiceDB<BankAccDto> service = (BankAccountService) dtoMap.get("BankAccount");
+        return ((BankAccountService) service).getByName(companyName);
+    }
+
 }

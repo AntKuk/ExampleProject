@@ -55,5 +55,10 @@ public class TransactionDAO extends BasicDAO implements Dao<Transact> {
         return null;
     }
 
+    @Override
+    public List<Transact> getAccsById(Integer id) {
+        return null;
+    }
+
 
 }

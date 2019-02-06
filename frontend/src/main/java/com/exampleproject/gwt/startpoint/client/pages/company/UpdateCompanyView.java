@@ -62,10 +62,10 @@ public class UpdateCompanyView extends AddCompanyView {
         this.id = companyDto.getId();
         getCompanyName().setText(companyDto.getCompanyName());
         getCompanyAddress().setText(companyDto.getCompanyName());
-        getIec().setText(Integer.toString(companyDto.getIec()));
-        getTin().setText(Integer.toString(companyDto.getTin()));
+        getIec().setText(Long.toString(companyDto.getIec()));
+        getTin().setText(Long.toString(companyDto.getTin()));
         getEmail().setText(companyDto.getEmail());
-        getTel().setText(Integer.toString(companyDto.getTelNumber()));
+        getTel().setText(Long.toString(companyDto.getTelNumber()));
         //getBankAcc().setText(Integer.toString(companyDto.getAcc().getCorAcc()));
     }
 

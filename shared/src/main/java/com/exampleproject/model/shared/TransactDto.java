@@ -13,13 +13,13 @@ public class TransactDto implements BasicDto{
     private String seller;
     private String customer;
     private int total;
-    private int sellerAcc;
-    private int customerAcc;
+    private long sellerAcc;
+    private long customerAcc;
 
     public TransactDto() {
     }
 
-    public TransactDto(int id, Date tranDate, String seller, String customer, int total, int sellerAcc, int customerAcc) {
+    public TransactDto(int id, Date tranDate, String seller, String customer, int total, long sellerAcc, long customerAcc) {
         this.id = id;
         this.tranDate = tranDate;
         this.seller = seller;
@@ -69,19 +69,19 @@ public class TransactDto implements BasicDto{
         this.total = total;
     }
 
-    public int getSellerAcc() {
+    public long getSellerAcc() {
         return sellerAcc;
     }
 
-    public void setSellerAcc(int sellerAcc) {
+    public void setSellerAcc(long sellerAcc) {
         this.sellerAcc = sellerAcc;
     }
 
-    public int getCustomerAcc() {
+    public long getCustomerAcc() {
         return customerAcc;
     }
 
-    public void setCustomerAcc(int customerAcc) {
+    public void setCustomerAcc(long customerAcc) {
         this.customerAcc = customerAcc;
     }
 

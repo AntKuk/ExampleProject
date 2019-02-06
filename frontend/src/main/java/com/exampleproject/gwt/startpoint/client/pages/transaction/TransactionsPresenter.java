@@ -138,13 +138,13 @@ public class TransactionsPresenter implements TabPresenter {
         sellerAccColumn = new TextColumn<TransactDto>() {
             @Override
             public String getValue(TransactDto transactDto) {
-                return Integer.toString(transactDto.getSellerAcc());
+                return Long.toString(transactDto.getSellerAcc());
             }
         };
         customerAccColumn = new TextColumn<TransactDto>() {
             @Override
             public String getValue(TransactDto transactDto) {
-                return Integer.toString(transactDto.getCustomerAcc());
+                return Long.toString(transactDto.getCustomerAcc());
             }
         };
 

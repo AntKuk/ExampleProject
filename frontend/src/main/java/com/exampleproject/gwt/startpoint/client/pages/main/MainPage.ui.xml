@@ -6,6 +6,7 @@
         <g:VerticalPanel>
             <g:Button ui:field="companiesBtn">Companies</g:Button>
             <g:Button ui:field="banksBtn">Banks</g:Button>
+            <g:Button ui:field="accountsBtn">Bank accounts</g:Button>
             <g:Button ui:field="transactionsBtn">Transactions</g:Button>
             <g:Button ui:field="usersBtn">Users</g:Button>
         </g:VerticalPanel>

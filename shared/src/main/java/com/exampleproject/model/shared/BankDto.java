@@ -4,12 +4,12 @@ public class BankDto implements BasicDto{
     private int id;
     private String bankName;
     private String city;
-    private int bic;
+    private long bic;
 
     public BankDto() {
     }
 
-    public BankDto(int id, String bankName, String city, int bic) {
+    public BankDto(int id, String bankName, String city, long bic) {
         this.id = id;
         this.bankName = bankName;
         this.city = city;
@@ -40,11 +40,11 @@ public class BankDto implements BasicDto{
         this.city = city;
     }
 
-    public int getBic() {
+    public long getBic() {
         return bic;
     }
 
-    public void setBic(int bic) {
+    public void setBic(long bic) {
         this.bic = bic;
     }
 
