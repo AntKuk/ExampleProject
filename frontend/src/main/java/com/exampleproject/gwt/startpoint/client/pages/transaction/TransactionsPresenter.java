@@ -6,6 +6,7 @@ import com.exampleproject.model.shared.TransactDto;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -28,6 +29,7 @@ public class TransactionsPresenter implements TabPresenter {
 
     private final WorkerClient client = GWT.create(WorkerClient.class);
     private final SingleSelectionModel<TransactDto> selectionModel = new SingleSelectionModel<>();
+    private final DateTimeFormat PUBLISH_DATE_FORMAT = DateTimeFormat.getFormat("dd-MM-yyyy");
 
     @UiField
     CellTable cellTable;
@@ -38,7 +40,8 @@ public class TransactionsPresenter implements TabPresenter {
 
 
     private TextColumn<TransactDto> idColumn;
-    private Column<TransactDto, Date> dateColumn;
+    //private Column<TransactDto, Date> dateColumn;
+    private TextColumn<TransactDto> dateColumn;
     private TextColumn<TransactDto> sellerColumn;
     private TextColumn<TransactDto> customerColumn;
     private TextColumn<TransactDto> totalColumn;
@@ -110,13 +113,21 @@ public class TransactionsPresenter implements TabPresenter {
                 return Integer.toString(transactDto.getId());
             }
         };
-        DateCell dateCell = new DateCell();
+/*        DateCell dateCell = new DateCell();
         dateColumn = new Column<TransactDto, Date>(dateCell) {
             @Override
             public Date getValue(TransactDto transactDto) {
                 return transactDto.getTranDate();
             }
+        };*/
+
+        dateColumn = new TextColumn<TransactDto>() {
+            @Override
+            public String getValue(TransactDto transactDto) {
+                return transactDto.getTranDate();
+            }
         };
+
         sellerColumn = new TextColumn<TransactDto>() {
             @Override
             public String getValue(TransactDto transactDto) {

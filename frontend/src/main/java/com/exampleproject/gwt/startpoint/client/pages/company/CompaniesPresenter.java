@@ -5,6 +5,8 @@ import com.exampleproject.gwt.startpoint.client.presenter.TabPresenter;
 import com.exampleproject.model.shared.CompanyDto;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -197,6 +199,22 @@ public class CompaniesPresenter implements TabPresenter {
         cellTable.addColumn(emailColumn, "Email");
 
         cellTable.setSelectionModel(selectionModel);
+
+        //Double click handler
+        cellTable.addDomHandler(new DoubleClickHandler() {
+
+            @Override
+            public void onDoubleClick(final DoubleClickEvent event) {
+                CompanyDto selected = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
+                if (selected != null) {
+                    new CompanyAccounts(selected.getCompanyName());
+                }
+            }
+        }, DoubleClickEvent.getType());
+
+
+
+
         /*
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override

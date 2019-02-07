@@ -1,14 +1,17 @@
 package com.exampleproject.model.shared;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.util.Date;
 @Component
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
-public class TransactDto implements BasicDto{
+public class TransactDto implements BasicDto, Serializable {
     private int id;
+    //@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date tranDate;
     private String seller;
     private String customer;

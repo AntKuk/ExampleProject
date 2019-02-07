@@ -7,6 +7,7 @@ import com.exampleproject.model.shared.BankAccDto;
 import com.exampleproject.model.shared.BankDto;
 import com.exampleproject.model.shared.CompanyDto;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -123,6 +124,9 @@ public class AddCompanyView {
         else {
             Window.alert(validator.getErrorString());
             validator.resetErrorString();
+            email.setStyleName("");
+            Style style = email.getElement().getStyle();
+            style.setBackgroundColor("red");
         }
     }
 
@@ -259,4 +263,5 @@ public class AddCompanyView {
     public Label getBankAccLabel() {
         return bankAccLabel;
     }
+
 }

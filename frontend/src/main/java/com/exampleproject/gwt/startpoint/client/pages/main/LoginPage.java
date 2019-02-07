@@ -16,7 +16,9 @@ import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
 public class LoginPage {
-    interface MyUiBinder extends UiBinder<DialogBox, LoginPage> {}
+    interface MyUiBinder extends UiBinder<DialogBox, LoginPage> {
+    }
+
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
     final WorkerClient client = GWT.create(WorkerClient.class);
@@ -48,7 +50,7 @@ public class LoginPage {
 
     @UiHandler("pwdTB")
     void enter(KeyDownEvent event) {
-        if(event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
             UserDto user = new UserDto(loginTB.getText(), pwdTB.getText().hashCode());
             client.login(user, new LoginMethodCallback());
         }
@@ -62,20 +64,19 @@ public class LoginPage {
 
         @Override
         public void onSuccess(Method method, Boolean aBoolean) {
-            if(aBoolean) {
-                //dialogBox.hide();
-
-                MainPage mainPage = GWT.create(MainPage.class);
-                if(loginTB.getText().equals("admin")) {
-                    mainPage.setAdmin(true);
-                }
-                mainPage.loadPagesForRole();
-                dialogBox.removeFromParent();
-                RootPanel.get().add(mainPage.getElement());
-            }
-            else {
+            if (!aBoolean) {
                 Window.alert("ACCESS DENIED");
+                return;
             }
+            //dialogBox.hide();
+            MainPage mainPage = GWT.create(MainPage.class);
+            if (loginTB.getText().equals("admin")) {
+                mainPage.setAdmin(true);
+            }
+            mainPage.loadPagesForRole();
+            dialogBox.removeFromParent();
+            RootPanel.get().add(mainPage.getElement());
+
         }
     }
 
