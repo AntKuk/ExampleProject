@@ -12,7 +12,7 @@ import java.util.Date;
 public class TransactDto implements BasicDto, Serializable {
     private int id;
     //@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-    private Date tranDate;
+    private String tranDate;
     private String seller;
     private String customer;
     private int total;
@@ -22,7 +22,7 @@ public class TransactDto implements BasicDto, Serializable {
     public TransactDto() {
     }
 
-    public TransactDto(int id, Date tranDate, String seller, String customer, int total, long sellerAcc, long customerAcc) {
+    public TransactDto(int id, String tranDate, String seller, String customer, int total, long sellerAcc, long customerAcc) {
         this.id = id;
         this.tranDate = tranDate;
         this.seller = seller;
@@ -40,11 +40,11 @@ public class TransactDto implements BasicDto, Serializable {
         this.id = id;
     }
 
-    public Date getTranDate() {
+    public String getTranDate() {
         return tranDate;
     }
 
-    public void setTranDate(Date tranDate) {
+    public void setTranDate(String tranDate) {
         this.tranDate = tranDate;
     }
 

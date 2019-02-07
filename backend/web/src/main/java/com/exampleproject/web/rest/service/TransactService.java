@@ -5,11 +5,13 @@ import com.exampleproject.web.rest.dao.Dao;
 import com.exampleproject.web.rest.entity.BankAccount;
 import com.exampleproject.web.rest.entity.Company;
 import com.exampleproject.web.rest.entity.Transact;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,7 @@ public class TransactService implements ServiceDB<TransactDto> {
     private final Dao<Transact> transactDao;
     private final Dao<Company> companyDao;
     private final Dao<BankAccount> bankAccountDao;
+
 
 
     @Autowired
@@ -66,7 +69,7 @@ public class TransactService implements ServiceDB<TransactDto> {
         for(Transact transact : list) {
             TransactDto transactDto = new TransactDto();
             transactDto.setId(transact.getId().intValue());
-            transactDto.setTranDate(transact.getTranDate());
+            transactDto.setTranDate(new SimpleDateFormat("MM-dd-yyyy").format(transact.getTranDate()));
             transactDto.setSeller(transact.getIdSeller().getCompanyName());
             transactDto.setCustomer(transact.getIdCustomer().getCompanyName());
             transactDto.setTotal(transact.getTotal());
