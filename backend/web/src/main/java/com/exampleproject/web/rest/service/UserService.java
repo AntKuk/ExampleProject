@@ -1,5 +1,6 @@
 package com.exampleproject.web.rest.service;
 
+import com.exampleproject.model.shared.LoginStatus;
 import com.exampleproject.model.shared.UserDto;
 import com.exampleproject.web.rest.dao.UserDao;
 import com.exampleproject.web.rest.entity.User;
@@ -20,13 +21,13 @@ public class UserService {
     }
 
 
-    public boolean isUser(UserDto user) {
-        return userDao.isUser(user);
+    public LoginStatus isUser(UserDto user) {
+        return new LoginStatus(userDao.isUser(user));
     }
 
     public boolean add(UserDto userDto) {
-        if(!isUser(userDto)) {
-            User user = new User(userDto.getLogin(), userDto.getPwd());
+        if(isUser(userDto).getRole().equals("none")) {
+            User user = new User(userDto.getLogin(), userDto.getPwd(), userDto.getRole());
             userDao.add(user);
             return true;
         }

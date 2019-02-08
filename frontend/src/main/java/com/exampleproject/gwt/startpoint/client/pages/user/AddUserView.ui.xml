@@ -8,6 +8,8 @@
             <g:TextBox ui:field="loginTB"/>
             <g:Label>Password</g:Label>
             <g:TextBox ui:field="pwdTB"/>
+            <g:Label>Admin?</g:Label>
+            <g:CheckBox ui:field="isAdmin"/>
             <g:Button ui:field="ok">Ok</g:Button>
             <g:Button ui:field="cancel">Cancel</g:Button>
         </g:HTMLPanel>

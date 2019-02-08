@@ -15,7 +15,7 @@ import java.util.List;
 @Repository("userDAO")
 @Transactional
 public class UserDao extends BasicDAO{
-    public boolean isUser(UserDto user) {
+    public String isUser(UserDto user) {
         Criteria criteria = getSession().createCriteria(User.class);
         Criterion login = Restrictions.eq("login", user.getLogin());
         Criterion pwd = Restrictions.eq("pwd", user.getPwd());
@@ -25,9 +25,9 @@ public class UserDao extends BasicDAO{
 
         User u = (User)criteria.uniqueResult();
         if(u != null) {
-            return true;
+            return u.getRole();
         }
-        return false;
+        return "none";
     }
 
     public void add(User user) {

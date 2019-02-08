@@ -176,14 +176,9 @@ public class RestExample {
     }
 
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
-    public Boolean login(@RequestBody UserDto user) {
-       boolean isUser = userService.isUser(user);
+    public LoginStatus login(@RequestBody UserDto user) {
+       return userService.isUser(user);
 
-        /* if(user.getLogin().equals("admin") & user.getPwd() == "admin".hashCode()) {
-            return true;
-        }
-        return false;*/
-        return isUser;
     }
 
 

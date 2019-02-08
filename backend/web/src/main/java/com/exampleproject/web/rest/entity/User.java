@@ -18,12 +18,16 @@ public class User implements BasicEntity {
     @Column(name = "pwd")
     private int pwd;
 
+    @Column(name = "role")
+    private String role;
+
     public User() {
     }
 
-    public User(String login, int pwd) {
+    public User(String login, int pwd, String role) {
         this.login = login;
         this.pwd = pwd;
+        this.role = role;
     }
 
     public int getId() {
@@ -48,5 +52,13 @@ public class User implements BasicEntity {
 
     public void setPwd(int pwd) {
         this.pwd = pwd;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

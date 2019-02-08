@@ -9,6 +9,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.TextBox;
 import org.fusesource.restygwt.client.Method;
@@ -28,6 +29,8 @@ public class AddUserView {
     TextBox loginTB;
     @UiField
     TextBox pwdTB;
+    @UiField
+    CheckBox isAdmin;
 
 
 
@@ -55,7 +58,8 @@ public class AddUserView {
     @UiHandler("ok")
     void ok(ClickEvent event) {
         final WorkerClient client = GWT.create(WorkerClient.class);
-        UserDto userDto = new UserDto(loginTB.getText(), pwdTB.getText().hashCode());
+        String role = isAdmin.getValue() ? "admin" : "user";
+        UserDto userDto = new UserDto(loginTB.getText(), pwdTB.getText().hashCode(), role);
         client.addUser(userDto, new MethodCallback<Boolean>() {
             @Override
             public void onFailure(Method method, Throwable exception) {

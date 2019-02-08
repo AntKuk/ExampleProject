@@ -1,6 +1,7 @@
 package com.exampleproject.gwt.startpoint.client.pages.main;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
+import com.exampleproject.model.shared.LoginStatus;
 import com.exampleproject.model.shared.UserDto;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -43,7 +44,7 @@ public class LoginPage {
     void ok(ClickEvent event) {
         String name = loginTB.getText();
         Integer p = pwdTB.getText().hashCode();
-        UserDto user = new UserDto(name, p);
+        UserDto user = new UserDto(name, p, "none");
         client.login(user, new LoginMethodCallback());
     }
 
@@ -51,28 +52,27 @@ public class LoginPage {
     @UiHandler("pwdTB")
     void enter(KeyDownEvent event) {
         if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-            UserDto user = new UserDto(loginTB.getText(), pwdTB.getText().hashCode());
+            UserDto user = new UserDto(loginTB.getText(), pwdTB.getText().hashCode(), "none");
             client.login(user, new LoginMethodCallback());
         }
     }
 
-    private class LoginMethodCallback implements MethodCallback<Boolean> {
+    private class LoginMethodCallback implements MethodCallback<LoginStatus> {
         @Override
-        public void onFailure(Method method, Throwable throwable) {
-            Window.alert("ACCESS DENIED");
+        public void onFailure(Method method, Throwable exception) {
+            Window.alert(exception.toString() + "\n" + exception.getMessage());
         }
 
         @Override
-        public void onSuccess(Method method, Boolean aBoolean) {
-            if (!aBoolean) {
+        public void onSuccess(Method method, LoginStatus loginStatus) {
+            if (loginStatus.getRole().equals("none")) {
                 Window.alert("ACCESS DENIED");
                 return;
             }
             //dialogBox.hide();
             MainPage mainPage = GWT.create(MainPage.class);
-            if (loginTB.getText().equals("admin")) {
-                mainPage.setAdmin(true);
-            }
+            mainPage.setAdmin(loginStatus.getRole().equals("admin"));
+
             mainPage.loadPagesForRole();
             dialogBox.removeFromParent();
             RootPanel.get().add(mainPage.getElement());
