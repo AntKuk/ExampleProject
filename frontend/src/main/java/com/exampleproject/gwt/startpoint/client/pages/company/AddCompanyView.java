@@ -3,13 +3,9 @@ package com.exampleproject.gwt.startpoint.client.pages.company;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.gwt.startpoint.client.pages.Validator;
-import com.exampleproject.model.shared.BankAccDto;
-import com.exampleproject.model.shared.BankDto;
 import com.exampleproject.model.shared.CompanyDto;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -19,13 +15,16 @@ import org.fusesource.restygwt.client.Defaults;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
-import java.util.List;
+import java.util.*;
+
+import static com.exampleproject.gwt.startpoint.client.pages.Styler.setDefaultStyle;
+import static com.exampleproject.gwt.startpoint.client.pages.Styler.setErrorStyle;
 
 public class AddCompanyView {
     interface MyUiBinder extends UiBinder<DialogBox, AddCompanyView> {}
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
-    final WorkerClient client = GWT.create(WorkerClient.class);
+    protected final WorkerClient client = GWT.create(WorkerClient.class);
 
     @UiField
     Button ok;
@@ -43,40 +42,25 @@ public class AddCompanyView {
     TextBox tel;
     @UiField
     TextBox email;
-    @UiField
-    ListBox bank;
-    @UiField
-    TextBox bankAcc;
-    @UiField
-    Label bankLabel;
-    @UiField
-    Label bankAccLabel;
-
 
 
     private DialogBox dialogBox;
     private CompaniesPresenter companiesPresenter;
-    private Validator validator;
+    protected Validator validator;
+    protected List<TextBox> inputs;
 
     public AddCompanyView() {
         dialogBox = uiBinder.createAndBindUi(this);
-        //this.companiesPresenter = companiesPresenter;
+
         this.validator = new Validator();
 
-        dialogBox.setText("Adding company");
-        dialogBox.setAnimationEnabled(true);
-        dialogBox.setGlassEnabled(true);
-        dialogBox.center();
-
-        setListBox();
-
-        dialogBox.show();
-    }
-
-/*
-    public AddCompanyView(CompaniesPresenter companiesPresenter) {
-        dialogBox = uiBinder.createAndBindUi(this);
-        this.companiesPresenter = companiesPresenter;
+        inputs = new ArrayList<>();
+        inputs.add(companyName);
+        inputs.add(companyAddress);
+        inputs.add(iec);
+        inputs.add(tin);
+        inputs.add(tel);
+        inputs.add(email);
 
         dialogBox.setText("Adding company");
         dialogBox.setAnimationEnabled(true);
@@ -85,7 +69,6 @@ public class AddCompanyView {
 
         dialogBox.show();
     }
-*/
 
     @UiHandler("cancel")
     void closeView(ClickEvent event) {
@@ -94,11 +77,14 @@ public class AddCompanyView {
 
     @UiHandler("ok")
     void add(ClickEvent event) {
+        for(TextBox textBox : inputs) {
+            setDefaultStyle(textBox);
+        }
 
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
         validator.resetErrorString();
-        if(isValid()) {
-            CompanyDto companyDto = createDto(true);
+        if(checkInputs()) {
+            CompanyDto companyDto = createDto();
             client.addCompany(companyDto, new MethodCallback<Boolean>() {
                 @Override
                 public void onFailure(Method method, Throwable exception) {
@@ -124,31 +110,10 @@ public class AddCompanyView {
         else {
             Window.alert(validator.getErrorString());
             validator.resetErrorString();
-            email.setStyleName("");
-            Style style = email.getElement().getStyle();
-            style.setBackgroundColor("red");
         }
     }
 
-
-    private void setListBox() {
-        client.getAllBanks(new MethodCallback<List<BankDto>>() {
-            @Override
-            public void onFailure(Method method, Throwable exception) {
-                Window.alert(exception.toString() + "\n" + exception.getMessage());
-            }
-
-            @Override
-            public void onSuccess(Method method, List<BankDto> bankDtos) {
-                for (BankDto bankDto : bankDtos) {
-                    bank.addItem(bankDto.getBankName());
-                }
-            }
-        });
-    }
-
-
-    protected CompanyDto createDto(boolean isNew) {
+    protected CompanyDto createDto() {
         CompanyDto companyDto = new CompanyDto();
         companyDto.setCompanyName(companyName.getText());
         companyDto.setAddress(companyAddress.getText());
@@ -157,27 +122,40 @@ public class AddCompanyView {
         companyDto.setEmail(email.getText());
         companyDto.setTelNumber(Long.parseLong(tel.getText()));
         companyDto.setId(0);
-        if (isNew) {
-            companyDto.setAcc(createAcc());
-        }
+
         return companyDto;
     }
 
-    protected BankAccDto createAcc() {
-        BankAccDto acc = new BankAccDto();
-        acc.setBankName(bank.getSelectedItemText());
-        acc.setComName(companyName.getText());
-        acc.setCorAcc(Long.parseLong(bankAcc.getText()));
+    protected boolean checkInputs() {
+        boolean isValid = true;
+        if(companyName.getText().isEmpty()) {
+            isValid = false;
+            setErrorStyle(companyName);
+        }
+        if(companyAddress.getText().isEmpty()) {
+            isValid = false;
+            setErrorStyle(companyAddress);
+        }
+        if(!validator.isIec(iec.getText())) {
+            isValid = false;
+            setErrorStyle(iec);
+        }
+        if(!validator.isTin(tin.getText())) {
+            isValid = false;
+            setErrorStyle(tin);
+        }
+        if (!validator.isTel(tel.getText())) {
+            isValid = false;
+            setErrorStyle(tel);
+        }
+        if (!validator.isEmail(email.getText())) {
+            isValid = false;
+            setErrorStyle(email);
+        }
 
-        return acc;
+        return isValid;
     }
 
-    private boolean isValid() {
-        return validator.isTin(tin.getText())
-                & validator.isEmail(email.getText())
-                & validator.isIec(iec.getText())
-                & validator.isTel(tel.getText());
-    }
 
 
     public void setCompaniesPresenter(CompaniesPresenter companiesPresenter) {
@@ -239,29 +217,4 @@ public class AddCompanyView {
     public void setEmail(TextBox email) {
         this.email = email;
     }
-
-    public ListBox getBank() {
-        return bank;
-    }
-
-    public void setBank(ListBox bank) {
-        this.bank = bank;
-    }
-
-    public TextBox getBankAcc() {
-        return bankAcc;
-    }
-
-    public void setBankAcc(TextBox bankAcc) {
-        this.bankAcc = bankAcc;
-    }
-
-    public Label getBankLabel() {
-        return bankLabel;
-    }
-
-    public Label getBankAccLabel() {
-        return bankAccLabel;
-    }
-
 }

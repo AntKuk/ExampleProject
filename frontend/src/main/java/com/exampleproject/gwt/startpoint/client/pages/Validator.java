@@ -1,5 +1,8 @@
 package com.exampleproject.gwt.startpoint.client.pages;
 
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.user.client.ui.TextBox;
+
 public class Validator {
     private String errorString = "";
     public Validator() {
@@ -45,6 +48,17 @@ public class Validator {
             return false;
         }
     }
+
+    public boolean isBic(String str) {
+        if(str.matches("\\d{9}")) {
+            return true;
+        }
+        else {
+            errorString += "\n Wrong BIC. Must contain 9 digits \n";
+            return false;
+        }
+    }
+
 
     public String getErrorString() {
         return errorString;

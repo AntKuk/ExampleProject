@@ -72,7 +72,6 @@ public class BanksPresenter implements TabPresenter {
     void deleteBtn(ClickEvent event) {
         BankDto bankDto = ((SingleSelectionModel<BankDto>)cellTable.getSelectionModel()).getSelectedObject();
         if(bankDto != null) {
-            Window.alert("Selected" + bankDto.getBankName());
             client.deleteBank(bankDto.getId(), new MethodCallback<Boolean>() {
                 @Override
                 public void onFailure(Method method, Throwable exception) {

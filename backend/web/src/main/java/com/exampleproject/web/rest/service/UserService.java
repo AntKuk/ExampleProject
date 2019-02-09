@@ -51,10 +51,7 @@ public class UserService {
             userDto.setLogin(userDao.getLogin());
             userDtos.add(userDto);
         }
-
         return userDtos;
     }
-
-
 
 }

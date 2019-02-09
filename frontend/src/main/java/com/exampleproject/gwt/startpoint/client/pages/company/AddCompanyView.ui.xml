@@ -17,11 +17,6 @@
             <g:TextBox ui:field="email"/>
             <g:Label>Tel</g:Label>
             <g:TextBox ui:field="tel"/>
-            <g:Label ui:field="bankLabel">Bank</g:Label>
-            <g:ListBox ui:field="bank"/>
-            <g:Label ui:field="bankAccLabel">Bank Account</g:Label>
-            <g:TextBox ui:field="bankAcc"/>
-
             <g:Button ui:field="ok">Ok</g:Button>
             <g:Button ui:field="cancel">Cancel</g:Button>
         </g:HTMLPanel>

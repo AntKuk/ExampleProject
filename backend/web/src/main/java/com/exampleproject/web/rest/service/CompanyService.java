@@ -17,16 +17,12 @@ import java.util.List;
 public class CompanyService implements ServiceDB<CompanyDto> {
 
     private final Dao<Company> companyDao;
-    private  final Dao<BankAccount> accountDao;
-    private final Dao<Bank> bankDao;
+    //private  final Dao<BankAccount> accountDao;
+    //private final Dao<Bank> bankDao;
 
     @Autowired
-    public CompanyService(@Qualifier("companyDAO") Dao<Company> companyDao,
-                          @Qualifier("bankAccDAO") Dao<BankAccount> accountDao,
-                          @Qualifier("bankDAO") Dao<Bank> bankDao) {
+    public CompanyService(@Qualifier("companyDAO") Dao<Company> companyDao) {
         this.companyDao = companyDao;
-        this.accountDao = accountDao;
-        this.bankDao = bankDao;
     }
 
     /*
@@ -49,7 +45,7 @@ public class CompanyService implements ServiceDB<CompanyDto> {
     @Override
     public void add(CompanyDto entity) {
         companyDao.add(fromDto(entity));
-        accountDao.add(createAcc(entity));
+        //accountDao.add(createAcc(entity));
     }
 
     @Override
@@ -83,7 +79,7 @@ public class CompanyService implements ServiceDB<CompanyDto> {
 
         return companyDao;
     }
-
+/*
     private BankAccount createAcc(CompanyDto companyDto) {
         BankAccount acc = new BankAccount();
         acc.setCorAcc(BigInteger.valueOf(companyDto.getAcc().getCorAcc()));
@@ -93,7 +89,7 @@ public class CompanyService implements ServiceDB<CompanyDto> {
         return acc;
     }
 
-
+*/
     private List<CompanyDto> fromDao(List<Company> list) {
         List<CompanyDto> listDto = new ArrayList<>();
         for(Company company : list) {

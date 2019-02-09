@@ -15,7 +15,7 @@ public class CompanyDto implements BasicDto {
     private long iec;
     private long telNumber;
     private String email;
-    private BankAccDto acc;
+    //private BankAccDto acc;
 
     public CompanyDto() {
     }
@@ -84,14 +84,6 @@ public class CompanyDto implements BasicDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public BankAccDto getAcc() {
-        return acc;
-    }
-
-    public void setAcc(BankAccDto acc) {
-        this.acc = acc;
     }
 
     @Override
