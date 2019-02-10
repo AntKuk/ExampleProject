@@ -4,7 +4,7 @@
              xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 
     <g:VerticalPanel>
-        <g:Label>Accounts</g:Label>
+        <g:Label ui:field="label">Accounts</g:Label>
         <g:HorizontalPanel>
             <g:Button ui:field="addButton">Add bank account</g:Button>
             <g:Button ui:field="deleteButton">Delete bank account</g:Button>

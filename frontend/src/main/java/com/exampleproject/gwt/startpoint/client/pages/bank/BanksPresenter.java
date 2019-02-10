@@ -12,6 +12,8 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import org.fusesource.restygwt.client.Defaults;
@@ -35,6 +37,8 @@ public class BanksPresenter implements TabPresenter {
     Button deleteButton;
     @UiField
     Button updateButton;
+    @UiField
+    Label label;
 
     private TextColumn<BankDto> idColumn;
     private TextColumn<BankDto> nameColumn;
@@ -46,6 +50,7 @@ public class BanksPresenter implements TabPresenter {
 
     public BanksPresenter() {
         root = uiBinder.createAndBindUi(this);
+        label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
         initTable();
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
         client.getAllBanks(new MethodCallback<List<BankDto>>() {

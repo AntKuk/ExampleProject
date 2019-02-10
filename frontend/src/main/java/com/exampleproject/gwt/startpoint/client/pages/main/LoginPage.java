@@ -36,6 +36,7 @@ public class LoginPage {
 
     public LoginPage() {
         dialogBox = uiBinder.createAndBindUi(this);
+        dialogBox.center();
         dialogBox.show();
         loginTB.setFocus(true);
     }

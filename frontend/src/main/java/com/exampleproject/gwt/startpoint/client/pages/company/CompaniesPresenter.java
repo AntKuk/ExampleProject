@@ -14,6 +14,8 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
@@ -41,6 +43,8 @@ public class CompaniesPresenter implements TabPresenter {
     Button deleteButton;
     @UiField
     Button updateButton;
+    @UiField
+    Label label;
 
 
 
@@ -56,6 +60,7 @@ public class CompaniesPresenter implements TabPresenter {
     public CompaniesPresenter() {
 
         root = uiBinder.createAndBindUi(this);
+        label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
         initTable();
         //Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
         client.getAllCompanies(new MethodCallback<List<CompanyDto>>() {

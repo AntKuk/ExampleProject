@@ -15,6 +15,8 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import org.fusesource.restygwt.client.Method;
@@ -37,6 +39,8 @@ public class TransactionsPresenter implements TabPresenter {
     Button addButton;
     @UiField
     Button deleteButton;
+    @UiField
+    Label label;
 
 
     private TextColumn<TransactDto> idColumn;
@@ -52,6 +56,7 @@ public class TransactionsPresenter implements TabPresenter {
 
     public TransactionsPresenter() {
         root = uiBinder.createAndBindUi(this);
+        label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
         initTable();
         client.getAllTransacts(new MethodCallback<List<TransactDto>>() {
             @Override

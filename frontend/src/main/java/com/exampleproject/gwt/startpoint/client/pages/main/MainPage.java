@@ -12,10 +12,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
 
 public class MainPage {
-    interface MyUiBinder extends UiBinder<HorizontalPanel, MainPage> {}
+    interface MyUiBinder extends UiBinder<VerticalPanel, MainPage> {}
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
-    private HorizontalPanel root;
+    private VerticalPanel root;
 
     @UiField
     Button companiesBtn;
@@ -29,6 +29,8 @@ public class MainPage {
     Button usersBtn;
     @UiField
     SimplePanel simplePanel;
+    //@UiField
+    //VerticalPanel vertical;
 
     private CompaniesPresenter companiesPresenter;
     private BanksPresenter banksPresenter;
@@ -40,6 +42,8 @@ public class MainPage {
 
     public MainPage() {
         root = uiBinder.createAndBindUi(this);
+        //vertical.setWidth("128px");
+        //simplePanel.setWidth("765px");
         companiesPresenter = GWT.create(CompaniesPresenter.class);
         banksPresenter = GWT.create(BanksPresenter.class);
         accsPresenter = GWT.create(AccountsPresenter.class);
@@ -72,7 +76,7 @@ public class MainPage {
         return simplePanel;
     }
 
-    public HorizontalPanel getElement() {
+    public VerticalPanel getElement() {
         return root;
     }
 
