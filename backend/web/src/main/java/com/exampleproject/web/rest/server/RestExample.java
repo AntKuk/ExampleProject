@@ -33,13 +33,10 @@ public class RestExample {
 
     @Autowired
     public RestExample(List<ServiceDB<? extends BasicDto>> dtoList, UserService userService) {
-
         this.dtoMap = new HashMap<String, ServiceDB<? extends BasicDto>>(dtoList.size());
-
         for (ServiceDB<? extends BasicDto> dto : dtoList) {
             dtoMap.put(dto.getEntityName(), dto);
         }
-
         this.userService = userService;
     }
 /*
