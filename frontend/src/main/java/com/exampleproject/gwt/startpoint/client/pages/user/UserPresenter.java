@@ -12,6 +12,8 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import org.fusesource.restygwt.client.Method;
@@ -32,6 +34,8 @@ public class UserPresenter implements TabPresenter {
     Button addButton;
     @UiField
     Button deleteButton;
+    @UiField
+    Label label;
 
     private TextColumn<UserDto> idColumn;
     private TextColumn<UserDto> userColumn;
@@ -40,6 +44,7 @@ public class UserPresenter implements TabPresenter {
 
     public UserPresenter() {
         root = uiBinder.createAndBindUi(this);
+        label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
         initTable();
         client.getUsers(new MethodCallback<List<UserDto>>() {
             @Override
@@ -98,24 +103,16 @@ public class UserPresenter implements TabPresenter {
                 return Integer.toString(userDto.getId());
             }
         };
-
         userColumn = new TextColumn<UserDto>() {
             @Override
             public String getValue(UserDto userDto) {
                 return userDto.getLogin();
             }
         };
-
         cellTable.addColumn(idColumn, "Id");
         cellTable.addColumn(userColumn, "Login");
-
         cellTable.setSelectionModel(selectionModel);
     }
-
-
-
-
-
 
     public VerticalPanel getElement() {
         return root;

@@ -5,7 +5,7 @@
 
 
     <g:VerticalPanel>
-        <g:Label>Users</g:Label>
+        <g:Label ui:field="label">Users</g:Label>
         <g:HorizontalPanel>
             <g:Button ui:field="addButton">Add user</g:Button>
             <g:Button ui:field="deleteButton">Delete user</g:Button>

@@ -92,7 +92,6 @@ public class AddBankView {
             Window.alert(validator.getErrorString());
             validator.resetErrorString();
         }
-
     }
 
 

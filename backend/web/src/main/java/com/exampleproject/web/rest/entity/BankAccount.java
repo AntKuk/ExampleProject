@@ -7,7 +7,6 @@ import java.math.BigInteger;
 @Table(name="bankacc")
 public class BankAccount implements BasicEntity{
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "coracc", nullable = false)
     private BigInteger corAcc;
 

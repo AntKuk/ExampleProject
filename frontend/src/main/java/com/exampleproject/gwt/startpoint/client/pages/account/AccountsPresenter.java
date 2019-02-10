@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SingleSelectionModel;
-import org.fusesource.restygwt.client.Defaults;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
@@ -101,8 +100,6 @@ public class AccountsPresenter implements TabPresenter {
         }
     }
 
-
-
     private void initTable() {
         accColumn = new TextColumn<BankAccDto>() {
             @Override
@@ -110,27 +107,22 @@ public class AccountsPresenter implements TabPresenter {
                 return Long.toString(bankAccDto.getCorAcc());
             }
         };
-
         bankColumn = new TextColumn<BankAccDto>() {
             @Override
             public String getValue(BankAccDto bankAccDto) {
                 return bankAccDto.getBankName();
             }
         };
-
         comColumn = new TextColumn<BankAccDto>() {
             @Override
             public String getValue(BankAccDto bankAccDto) {
                 return bankAccDto.getComName();
             }
         };
-
         cellTable.addColumn(accColumn, "Correspondence account");
         cellTable.addColumn(bankColumn, "Bank");
         cellTable.addColumn(comColumn, "Company");
-
         cellTable.setSelectionModel(selectionModel);
-
 
     }
 

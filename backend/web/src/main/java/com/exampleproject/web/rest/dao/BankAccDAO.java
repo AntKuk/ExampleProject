@@ -1,6 +1,5 @@
 package com.exampleproject.web.rest.dao;
 
-
 import com.exampleproject.web.rest.entity.BankAccount;
 import org.hibernate.Criteria;
 import org.hibernate.Query;

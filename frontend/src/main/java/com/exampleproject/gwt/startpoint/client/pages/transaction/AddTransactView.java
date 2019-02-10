@@ -115,7 +115,6 @@ public class AddTransactView {
 
     @UiHandler("customerName")
     void customerChanged(ChangeEvent event) {
-        //List<BankAccDto> list = new ArrayList<>();
         customerAcc.clear();
         client.getAccounts(customerName.getSelectedItemText(), new ListMethodCallback(customerAcc));
     }

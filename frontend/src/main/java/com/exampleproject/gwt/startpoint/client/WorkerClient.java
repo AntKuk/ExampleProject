@@ -1,9 +1,6 @@
 package com.exampleproject.gwt.startpoint.client;
 
-
-
 import com.exampleproject.model.shared.*;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 
@@ -15,15 +12,7 @@ import java.util.List;
 
 
 public interface WorkerClient extends RestService {
-/*
-	@GET
-	@Path("/test")
-	void get(MethodCallback<TestDto> callback);
 
-	@GET
-	@Path("/testDb")
-	void getDb(MethodCallback<Boolean> callback);
-*/
 	@GET
 	@Path("/Company")
 	void getAllCompanies(MethodCallback<List<CompanyDto>> callback);

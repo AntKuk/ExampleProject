@@ -17,14 +17,10 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
-import org.fusesource.restygwt.client.Defaults;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CompaniesPresenter implements TabPresenter {
@@ -46,8 +42,6 @@ public class CompaniesPresenter implements TabPresenter {
     @UiField
     Label label;
 
-
-
     private TextColumn<CompanyDto> idColumn;
     private TextColumn<CompanyDto> nameColumn;
     private TextColumn<CompanyDto> addrColumn;
@@ -56,9 +50,7 @@ public class CompaniesPresenter implements TabPresenter {
     private TextColumn<CompanyDto> telColumn;
     private TextColumn<CompanyDto> emailColumn;
 
-
     public CompaniesPresenter() {
-
         root = uiBinder.createAndBindUi(this);
         label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
         initTable();
@@ -71,18 +63,15 @@ public class CompaniesPresenter implements TabPresenter {
 
             @Override
             public void onSuccess(Method method, List<CompanyDto> companyDto) {
-
                 cellTable.setRowData(companyDto);
             }
         });
-
     }
 
     @UiHandler("addButton")
     void addBtn(ClickEvent event) {
         AddCompanyView addCompanyView = GWT.create(AddCompanyView.class);
         addCompanyView.setCompaniesPresenter(this);
-        //new AddCompanyView(this);
     }
 
     @UiHandler("deleteButton")
@@ -150,42 +139,36 @@ public class CompaniesPresenter implements TabPresenter {
                 return Integer.toString(companyDto.getId());
             }
         };
-
         nameColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
                 return companyDto.getCompanyName();
             }
         };
-
         addrColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
                 return companyDto.getAddress();
             }
         };
-
         tinColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
                 return Long.toString(companyDto.getTin());
             }
         };
-
         iecColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
                 return Long.toString(companyDto.getIec());
             }
         };
-
         telColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
                 return Long.toString(companyDto.getTelNumber());
             }
         };
-
         emailColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
@@ -214,19 +197,5 @@ public class CompaniesPresenter implements TabPresenter {
                 }
             }
         }, DoubleClickEvent.getType());
-
-
-
-
-        /*
-        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-            @Override
-            public void onSelectionChange(SelectionChangeEvent selectionChangeEvent) {
-                CompanyDto companyDto = selectionModel.getSelectedObject();
-
-            }
-        })*/
     }
-
-
 }

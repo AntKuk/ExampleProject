@@ -150,7 +150,6 @@ public class AddAccountView {
         });
     }
 
-
     public AccountsPresenter getAccountsPresenter() {
         return accountsPresenter;
     }

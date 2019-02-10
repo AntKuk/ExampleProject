@@ -3,15 +3,12 @@ package com.exampleproject.gwt.startpoint.client.pages.transaction;
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.gwt.startpoint.client.presenter.TabPresenter;
 import com.exampleproject.model.shared.TransactDto;
-import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
@@ -22,7 +19,6 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
-import java.util.Date;
 import java.util.List;
 
 public class TransactionsPresenter implements TabPresenter {
@@ -31,7 +27,6 @@ public class TransactionsPresenter implements TabPresenter {
 
     private final WorkerClient client = GWT.create(WorkerClient.class);
     private final SingleSelectionModel<TransactDto> selectionModel = new SingleSelectionModel<>();
-    private final DateTimeFormat PUBLISH_DATE_FORMAT = DateTimeFormat.getFormat("dd-MM-yyyy");
 
     @UiField
     CellTable cellTable;
@@ -42,9 +37,7 @@ public class TransactionsPresenter implements TabPresenter {
     @UiField
     Label label;
 
-
     private TextColumn<TransactDto> idColumn;
-    //private Column<TransactDto, Date> dateColumn;
     private TextColumn<TransactDto> dateColumn;
     private TextColumn<TransactDto> sellerColumn;
     private TextColumn<TransactDto> customerColumn;
@@ -70,7 +63,6 @@ public class TransactionsPresenter implements TabPresenter {
             }
         });
     }
-
 
     @UiHandler("addButton")
     void addBtn(ClickEvent event) {
@@ -118,21 +110,12 @@ public class TransactionsPresenter implements TabPresenter {
                 return Integer.toString(transactDto.getId());
             }
         };
-/*        DateCell dateCell = new DateCell();
-        dateColumn = new Column<TransactDto, Date>(dateCell) {
-            @Override
-            public Date getValue(TransactDto transactDto) {
-                return transactDto.getTranDate();
-            }
-        };*/
-
         dateColumn = new TextColumn<TransactDto>() {
             @Override
             public String getValue(TransactDto transactDto) {
                 return transactDto.getTranDate();
             }
         };
-
         sellerColumn = new TextColumn<TransactDto>() {
             @Override
             public String getValue(TransactDto transactDto) {
@@ -175,9 +158,6 @@ public class TransactionsPresenter implements TabPresenter {
 
         cellTable.setSelectionModel(selectionModel);
     }
-
-
-
 
 
     public VerticalPanel getElement() {

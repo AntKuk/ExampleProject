@@ -29,8 +29,6 @@ public class MainPage {
     Button usersBtn;
     @UiField
     SimplePanel simplePanel;
-    //@UiField
-    //VerticalPanel vertical;
 
     private CompaniesPresenter companiesPresenter;
     private BanksPresenter banksPresenter;
@@ -38,21 +36,16 @@ public class MainPage {
     private TransactionsPresenter transactionsPresenter;
     private UserPresenter userPresenter;
     private boolean isAdmin = false;
-    //private WorkerClient client;
 
     public MainPage() {
         root = uiBinder.createAndBindUi(this);
-        //vertical.setWidth("128px");
-        //simplePanel.setWidth("765px");
         companiesPresenter = GWT.create(CompaniesPresenter.class);
         banksPresenter = GWT.create(BanksPresenter.class);
         accsPresenter = GWT.create(AccountsPresenter.class);
         transactionsPresenter = GWT.create(TransactionsPresenter.class);
         userPresenter = GWT.create(UserPresenter.class);
         addButtonHandlers();
-
     }
-
 
 
     public void loadPagesForRole() {

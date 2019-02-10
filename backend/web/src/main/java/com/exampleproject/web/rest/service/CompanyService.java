@@ -17,27 +17,18 @@ import java.util.List;
 public class CompanyService implements ServiceDB<CompanyDto> {
 
     private final Dao<Company> companyDao;
-    //private  final Dao<BankAccount> accountDao;
-    //private final Dao<Bank> bankDao;
+
 
     @Autowired
     public CompanyService(@Qualifier("companyDAO") Dao<Company> companyDao) {
         this.companyDao = companyDao;
     }
 
-    /*
-        public List<Company> getAllCompanies() {
-            return companyDAO.getAllCompanies();
-        }
-    */
+
     public List<CompanyDto> getAll() {
         return fromDao(companyDao.getAllObjects());
     }
-/*
-    public CompanyDto getById(BigInteger id) {
-        return null;
-    }
-*/
+
     public String getEntityName() {
         return companyDao.getEntityName();
     }
@@ -45,7 +36,6 @@ public class CompanyService implements ServiceDB<CompanyDto> {
     @Override
     public void add(CompanyDto entity) {
         companyDao.add(fromDto(entity));
-        //accountDao.add(createAcc(entity));
     }
 
     @Override
@@ -71,7 +61,6 @@ public class CompanyService implements ServiceDB<CompanyDto> {
         companyDao.setCompanyName(companyDto.getCompanyName());
         companyDao.setAddress(companyDto.getAddress());
         companyDao.setEmail(companyDto.getEmail());
-        //companyDao.setId(BigInteger.valueOf(companyDto.getId()));
         companyDao.setEmail(companyDto.getEmail());
         companyDao.setIec(companyDto.getIec());
         companyDao.setTelNumber(companyDto.getTelNumber());
@@ -79,17 +68,7 @@ public class CompanyService implements ServiceDB<CompanyDto> {
 
         return companyDao;
     }
-/*
-    private BankAccount createAcc(CompanyDto companyDto) {
-        BankAccount acc = new BankAccount();
-        acc.setCorAcc(BigInteger.valueOf(companyDto.getAcc().getCorAcc()));
-        acc.setIdCom(companyDao.getByName(companyDto.getAcc().getComName()).getId().intValue());
-        acc.setIdBank(bankDao.getByName(companyDto.getAcc().getBankName()).getId().intValue());
 
-        return acc;
-    }
-
-*/
     private List<CompanyDto> fromDao(List<Company> list) {
         List<CompanyDto> listDto = new ArrayList<>();
         for(Company company : list) {

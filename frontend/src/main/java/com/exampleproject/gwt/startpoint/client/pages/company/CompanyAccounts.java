@@ -27,7 +27,6 @@ public class CompanyAccounts {
 
     final WorkerClient client = GWT.create(WorkerClient.class);
 
-
     @UiField
     Button cancel;
     @UiField
@@ -75,27 +74,20 @@ public class CompanyAccounts {
                 return Long.toString(bankAccDto.getCorAcc());
             }
         };
-
         bankColumn = new TextColumn<BankAccDto>() {
             @Override
             public String getValue(BankAccDto bankAccDto) {
                 return bankAccDto.getBankName();
             }
         };
-
         comColumn = new TextColumn<BankAccDto>() {
             @Override
             public String getValue(BankAccDto bankAccDto) {
                 return bankAccDto.getComName();
             }
         };
-
         cellTable.addColumn(accColumn, "Correspondence account");
         cellTable.addColumn(bankColumn, "Bank");
         cellTable.addColumn(comColumn, "Company");
-
-        //cellTable.setSelectionModel(selectionModel);
-
-
     }
 }

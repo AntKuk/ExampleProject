@@ -13,12 +13,7 @@ import java.util.List;
 @Repository("companyDAO")
 @Transactional
 public class CompanyDAO extends BasicDAO implements Dao<Company> {
-/*
-    public List<Company> getAllCompanies() {
-        Criteria criteria = getSession().createCriteria(Company.class);
-        return criteria.list();
-    }
-*/
+
     public List<Company> getAllObjects() {
         Criteria criteria = getSession().createCriteria(Company.class);
         return criteria.list();

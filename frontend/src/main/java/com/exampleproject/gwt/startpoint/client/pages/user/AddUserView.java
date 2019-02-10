@@ -32,16 +32,11 @@ public class AddUserView {
     @UiField
     CheckBox isAdmin;
 
-
-
     private DialogBox dialogBox;
     private UserPresenter userPresenter;
 
-
-
     public AddUserView() {
         dialogBox = uiBinder.createAndBindUi(this);
-
         dialogBox.setText("Adding user");
         dialogBox.setAnimationEnabled(true);
         dialogBox.setGlassEnabled(true);

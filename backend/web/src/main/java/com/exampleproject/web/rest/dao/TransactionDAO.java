@@ -13,13 +13,7 @@ import java.util.List;
 @Repository("transactionDAO")
 @Transactional
 public class TransactionDAO extends BasicDAO implements Dao<Transact> {
- /*   public List<Transact> getAllTransactions() {
-        Criteria criteria = getSession().createCriteria(Transact.class);
-        List<Transact> list = criteria.list();
-        System.out.println();
-        return criteria.list();
-    }
-*/
+
     public List<Transact> getAllObjects() {
         Criteria criteria = getSession().createCriteria(Transact.class);
         return criteria.list();

@@ -21,11 +21,6 @@ public class BankService implements ServiceDB<BankDto> {
         this.bankDao = bankDao;
     }
 
-    /*
-        public List<Company> getAllCompanies() {
-            return companyDAO.getAllCompanies();
-        }
-    */
     public List<BankDto> getAll() {
         return fromDao(bankDao.getAllObjects());
     }

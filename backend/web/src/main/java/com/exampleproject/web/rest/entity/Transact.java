@@ -17,17 +17,13 @@ public class Transact implements BasicEntity{
     @Column(name = "trandate", nullable = false)
     private Date tranDate;
 
-    //@Column(name = "idseller", nullable = false)
     @ManyToOne
     @JoinColumn(name = "idseller", referencedColumnName = "idcom")
     private Company idSeller;
-    //private int idSeller;
 
     @ManyToOne
     @JoinColumn(name = "idcustomer", referencedColumnName = "idcom")
     private Company idCustomer;
-    //@Column(name = "idcustomer")
-    //private int idCustomer;
 
     @Column(name = "total")
     private int total;
@@ -40,12 +36,6 @@ public class Transact implements BasicEntity{
     @ManyToOne
     @JoinColumn(name = "coracc_cust", referencedColumnName = "coracc")
     private BankAccount customerAcc;
-    //@Column(name = "coracc_sel")
-    //private int selAcc;
-
-    //@Column(name = "coracc_cust")
-    //private int custAcc;
-
 
     public Transact() {
     }

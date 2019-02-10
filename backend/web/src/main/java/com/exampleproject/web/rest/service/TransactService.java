@@ -54,11 +54,6 @@ public class TransactService implements ServiceDB<TransactDto> {
 
     }
 
-/*
-    public TransactDto getById(BigInteger id) {
-        return null;
-    }
-*/
     public String getEntityName() {
         return transactDao.getEntityName();
     }
@@ -84,7 +79,6 @@ public class TransactService implements ServiceDB<TransactDto> {
 
     private Transact fromDto(TransactDto transactDto) {
         Transact transactDao = new Transact();
-        //bankDao.setId(BigInteger.valueOf(bankDto.getId()));
 
         transactDao.setIdCustomer(companyDao.getByName(transactDto.getCustomer()));
         transactDao.setIdSeller(companyDao.getByName(transactDto.getSeller()));
@@ -93,8 +87,6 @@ public class TransactService implements ServiceDB<TransactDto> {
         transactDao.setSellerAcc(bankAccountDao.getObject(BigInteger.valueOf(transactDto.getSellerAcc())));
         transactDao.setCustomerAcc(bankAccountDao.getObject(BigInteger.valueOf(transactDto.getCustomerAcc())));
 
-        //transactDao.setSellerAcc(bankAccountDao.getByName(Integer.toString(companyDao.getByName(transactDto.getSeller()).getId().intValue())));
-        //transactDao.setCustomerAcc(bankAccountDao.getByName(Integer.toString(companyDao.getByName(transactDto.getCustomer()).getId().intValue())));
         return transactDao;
     }
 }

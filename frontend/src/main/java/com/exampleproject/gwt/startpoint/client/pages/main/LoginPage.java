@@ -17,8 +17,7 @@ import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
 public class LoginPage {
-    interface MyUiBinder extends UiBinder<DialogBox, LoginPage> {
-    }
+    interface MyUiBinder extends UiBinder<DialogBox, LoginPage> {}
 
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
@@ -70,7 +69,6 @@ public class LoginPage {
                 Window.alert("ACCESS DENIED");
                 return;
             }
-            //dialogBox.hide();
             MainPage mainPage = GWT.create(MainPage.class);
             mainPage.setAdmin(loginStatus.getRole().equals("admin"));
 
@@ -80,5 +78,4 @@ public class LoginPage {
 
         }
     }
-
 }

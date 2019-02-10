@@ -49,12 +49,7 @@ public class BankAccountService implements ServiceDB<BankAccDto> {
 
     @Override
     public void updateById(BankAccDto bankAccDto) {
- /*       Bank bank = bankDao.getObject(BigInteger.valueOf(bankDto.getId()));
-        bank.setBankName(bankDto.getBankName());
-        bank.setCity(bankDto.getCity());
-        bank.setBic(bankDto.getBic());
 
-        bankDao.updateById(bank);*/
     }
 
     public List<BankAccDto> getByName(String name) {
