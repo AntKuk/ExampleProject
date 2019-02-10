@@ -44,7 +44,7 @@ public class AccountsPresenter implements TabPresenter {
     public AccountsPresenter() {
         root = uiBinder.createAndBindUi(this);
         initTable();
-        Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
+        //Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
         client.getAllAccounts(new MethodCallback<List<BankAccDto>>() {
             @Override
             public void onFailure(Method method, Throwable exception) {

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
-@Component
-@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+//@Component
+//@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 public class TransactDto implements BasicDto, Serializable {
     private int id;
     //@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")

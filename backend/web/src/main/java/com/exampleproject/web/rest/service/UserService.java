@@ -32,7 +32,6 @@ public class UserService {
             return true;
         }
         return false;
-
     }
 
     public List<UserDto> getAll() {
@@ -43,6 +42,7 @@ public class UserService {
     public void delete(Integer id) {
         userDao.deleteById(id);
     }
+
     private List<UserDto> fromDao(List<User> userDaos) {
         List<UserDto> userDtos = new ArrayList<>();
         for(User userDao : userDaos) {

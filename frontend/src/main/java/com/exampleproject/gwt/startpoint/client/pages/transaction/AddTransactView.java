@@ -1,6 +1,7 @@
 package com.exampleproject.gwt.startpoint.client.pages.transaction;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
+import com.exampleproject.gwt.startpoint.client.pages.Validator;
 import com.exampleproject.gwt.startpoint.client.pages.bank.BanksPresenter;
 import com.exampleproject.model.shared.BankAccDto;
 import com.exampleproject.model.shared.BankDto;
@@ -22,6 +23,9 @@ import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.exampleproject.gwt.startpoint.client.pages.Styler.setDefaultStyle;
+import static com.exampleproject.gwt.startpoint.client.pages.Styler.setErrorStyle;
 
 public class AddTransactView {
     interface MyUiBinder extends UiBinder<DialogBox, AddTransactView> {}
@@ -45,14 +49,13 @@ public class AddTransactView {
     ListBox sellerAcc;
 
 
-
     private DialogBox dialogBox;
     private TransactionsPresenter transactionsPresenter;
-    //private List<CompanyDto> list;
-
+    private Validator validator;
 
     public AddTransactView() {
         dialogBox = uiBinder.createAndBindUi(this);
+        validator = new Validator();
 
         dialogBox.setText("Adding transaction");
         dialogBox.setAnimationEnabled(true);
@@ -60,7 +63,6 @@ public class AddTransactView {
         dialogBox.center();
 
         setListBoxes();
-
 
         dialogBox.show();
     }
@@ -72,30 +74,36 @@ public class AddTransactView {
 
     @UiHandler("ok")
     void add(ClickEvent event) {
-        final WorkerClient client = GWT.create(WorkerClient.class);
-        //Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
-        TransactDto transactDto = createDto();
-        client.addTransact(transactDto, new MethodCallback<Boolean>() {
-            @Override
-            public void onFailure(Method method, Throwable exception) {
-                Window.alert(exception.toString() + "\n" + exception.getMessage());
-            }
-            @Override
-            public void onSuccess(Method method, Boolean aBoolean) {
-                dialogBox.hide();
-                Window.alert("Added");
-                client.getAllTransacts(new MethodCallback<List<TransactDto>>() {
-                    @Override
-                    public void onFailure(Method method, Throwable exception) {
-                        Window.alert(exception.toString() + "\n" + exception.getMessage());
-                    }
-                    @Override
-                    public void onSuccess(Method method, List<TransactDto> transactDto) {
-                        transactionsPresenter.getCellTable().setRowData(transactDto);
-                    }
-                });
-            }
-        });
+        setDefaultStyle(total);
+        validator.resetErrorString();
+        if (checkInputs()) {
+            TransactDto transactDto = createDto();
+            client.addTransact(transactDto, new MethodCallback<Boolean>() {
+                @Override
+                public void onFailure(Method method, Throwable exception) {
+                    Window.alert(exception.toString() + "\n" + exception.getMessage());
+                }
+                @Override
+                public void onSuccess(Method method, Boolean aBoolean) {
+                    dialogBox.hide();
+                    Window.alert("Added");
+                    client.getAllTransacts(new MethodCallback<List<TransactDto>>() {
+                        @Override
+                        public void onFailure(Method method, Throwable exception) {
+                            Window.alert(exception.toString() + "\n" + exception.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(Method method, List<TransactDto> transactDto) {
+                            transactionsPresenter.getCellTable().setRowData(transactDto);
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            Window.alert(validator.getErrorString());
+            validator.resetErrorString();
+        }
     }
 
     @UiHandler("sellerName")
@@ -112,8 +120,17 @@ public class AddTransactView {
         client.getAccounts(customerName.getSelectedItemText(), new ListMethodCallback(customerAcc));
     }
 
+    private boolean checkInputs() {
+        boolean isValid = true;
+        if (!validator.isTotal(total.getText())) {
+            isValid = false;
+            setErrorStyle(total);
+        }
+        return isValid;
+    }
 
-    protected TransactDto createDto() {
+
+    private TransactDto createDto() {
         TransactDto transactDto = new TransactDto();
         transactDto.setSeller(sellerName.getSelectedItemText());
         transactDto.setCustomer(customerName.getSelectedItemText());
@@ -138,16 +155,6 @@ public class AddTransactView {
                 }
             }
         });
-/*
-        MyMethodCallback myMethodCallback = new MyMethodCallback();
-        client.getAllCompanies(myMethodCallback);
-        List<CompanyDto> list = myMethodCallback.getList();
-
-        for(CompanyDto companyDto : list) {
-            sellerName.addItem(companyDto.getCompanyName());
-            customerName.addItem(companyDto.getCompanyName());
-        }
-*/
     }
 
 

@@ -95,7 +95,7 @@ public class BanksPresenter implements TabPresenter {
             });
         }
         else {
-            Window.alert("Select bank");
+            Window.alert("Please select bank");
         }
     }
 
@@ -108,7 +108,7 @@ public class BanksPresenter implements TabPresenter {
             updateBankView.fillTextFields(bankDto);
         }
         else {
-            Window.alert("Select bank");
+            Window.alert("Please select bank");
         }
     }
 

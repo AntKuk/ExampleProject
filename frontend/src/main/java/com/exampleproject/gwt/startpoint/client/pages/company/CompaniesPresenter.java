@@ -84,7 +84,6 @@ public class CompaniesPresenter implements TabPresenter {
     void deleteDtn(ClickEvent event) {
         CompanyDto companyDto = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
         if(companyDto != null) {
-            Window.alert("Selected" + companyDto.getCompanyName());
             client.deleteCompany(companyDto.getId(), new MethodCallback<Boolean>() {
                 @Override
                 public void onFailure(Method method, Throwable exception) {
@@ -94,7 +93,6 @@ public class CompaniesPresenter implements TabPresenter {
                 @Override
                 public void onSuccess(Method method, Boolean aBoolean) {
                     Window.alert("Deleted");
-
                     client.getAllCompanies(new MethodCallback<List<CompanyDto>>() {
                         @Override
                         public void onFailure(Method method, Throwable exception) {
@@ -109,7 +107,7 @@ public class CompaniesPresenter implements TabPresenter {
             });
         }
         else {
-            Window.alert("Select company");
+            Window.alert("Please select company");
         }
     }
 

@@ -59,6 +59,26 @@ public class Validator {
         }
     }
 
+    public boolean isBankAcc(String str) {
+        if(str.matches("\\d{9}")) {
+            return true;
+        }
+        else {
+            errorString += "\n Wrong Bank Account number. Must contain 9 digits \n";
+            return false;
+        }
+    }
+
+    public boolean isTotal(String str) {
+        if(str.matches("\\d+")) {
+            return true;
+        }
+        else {
+            errorString += "\n Wrong Total. Must contain only digits \n";
+            return false;
+        }
+    }
+
 
     public String getErrorString() {
         return errorString;

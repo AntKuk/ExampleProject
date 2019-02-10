@@ -56,6 +56,7 @@ public class MainPage {
             companiesPresenter.getDeleteButton().removeFromParent();
             banksPresenter.getDeleteButton().removeFromParent();
             transactionsPresenter.getDeleteButton().removeFromParent();
+            accsPresenter.getDeleteButton().removeFromParent();
             usersBtn.removeFromParent();
         }
     }

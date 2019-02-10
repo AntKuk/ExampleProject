@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
-@Component
-@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+//@Component
+//@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 public class CompanyDto implements BasicDto {
     private int id;
     private String companyName;

@@ -1,6 +1,7 @@
 package com.exampleproject.gwt.startpoint.client.pages.account;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
+import com.exampleproject.gwt.startpoint.client.pages.Validator;
 import com.exampleproject.model.shared.BankAccDto;
 import com.exampleproject.model.shared.BankDto;
 import com.exampleproject.model.shared.CompanyDto;
@@ -18,6 +19,9 @@ import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.List;
+
+import static com.exampleproject.gwt.startpoint.client.pages.Styler.setDefaultStyle;
+import static com.exampleproject.gwt.startpoint.client.pages.Styler.setErrorStyle;
 
 public class AddAccountView {
     interface MyUiBinder extends UiBinder<DialogBox, AddAccountView> {}
@@ -37,13 +41,14 @@ public class AddAccountView {
     TextBox account;
 
 
-
     private DialogBox dialogBox;
     private AccountsPresenter accountsPresenter;
+    private Validator validator;
 
 
     public AddAccountView() {
         dialogBox = uiBinder.createAndBindUi(this);
+        validator = new Validator();
 
         dialogBox.setText("Adding account");
         dialogBox.setAnimationEnabled(true);
@@ -51,7 +56,6 @@ public class AddAccountView {
         dialogBox.center();
 
         setListBoxes();
-
 
         dialogBox.show();
     }
@@ -63,33 +67,51 @@ public class AddAccountView {
 
     @UiHandler("ok")
     void add(ClickEvent event) {
+        setDefaultStyle(account);
+        validator.resetErrorString();
+        if(checkInputs()) {
+            BankAccDto bankAccDto = createDto();
+            client.addAccount(bankAccDto, new MethodCallback<Boolean>() {
+                @Override
+                public void onFailure(Method method, Throwable exception) {
+                    Window.alert(exception.toString() + "\n" + exception.getMessage());
+                }
+                @Override
+                public void onSuccess(Method method, Boolean aBoolean) {
+                    dialogBox.hide();
+                    Window.alert("Added");
+                    client.getAllAccounts(new MethodCallback<List<BankAccDto>>() {
+                        @Override
+                        public void onFailure(Method method, Throwable exception) {
+                            Window.alert(exception.toString() + "\n" + exception.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(Method method, List<BankAccDto> transactDto) {
+                            accountsPresenter.getCellTable().setRowData(transactDto);
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            Window.alert(validator.getErrorString());
+            validator.resetErrorString();
+        }
 
-        BankAccDto bankAccDto = createDto();
-        client.addAccount(bankAccDto, new MethodCallback<Boolean>() {
-            @Override
-            public void onFailure(Method method, Throwable exception) {
-                Window.alert(exception.toString() + "\n" + exception.getMessage());
-            }
-            @Override
-            public void onSuccess(Method method, Boolean aBoolean) {
-                dialogBox.hide();
-                Window.alert("Added");
-                client.getAllAccounts(new MethodCallback<List<BankAccDto>>() {
-                    @Override
-                    public void onFailure(Method method, Throwable exception) {
-                        Window.alert(exception.toString() + "\n" + exception.getMessage());
-                    }
-                    @Override
-                    public void onSuccess(Method method, List<BankAccDto> transactDto) {
-                       accountsPresenter.getCellTable().setRowData(transactDto);
-                    }
-                });
-            }
-        });
+
     }
 
+    private boolean checkInputs() {
+        boolean isValid = true;
+        if (!validator.isBankAcc(account.getText())) {
+            isValid = false;
+            setErrorStyle(account);
+        }
 
-    protected BankAccDto createDto() {
+        return isValid;
+    }
+
+    private BankAccDto createDto() {
         BankAccDto bankAccDto = new BankAccDto();
         bankAccDto.setComName(companyName.getSelectedItemText());
         bankAccDto.setBankName(bankName.getSelectedItemText());
