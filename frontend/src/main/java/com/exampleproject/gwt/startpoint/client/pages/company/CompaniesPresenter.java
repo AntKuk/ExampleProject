@@ -1,25 +1,46 @@
 package com.exampleproject.gwt.startpoint.client.pages.company;
 
+import com.exampleproject.gwt.startpoint.client.WorkerClient;
+import com.exampleproject.gwt.startpoint.client.presenter.TabPresenter;
 import com.exampleproject.model.shared.CompanyDto;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.SingleSelectionModel;
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class CompaniesPresenter {
+public class CompaniesPresenter implements TabPresenter {
     interface MyUiBinder extends UiBinder<VerticalPanel, CompaniesPresenter> {}
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
+    private final WorkerClient client = GWT.create(WorkerClient.class);
     private VerticalPanel root;
+    private final SingleSelectionModel<CompanyDto> selectionModel = new SingleSelectionModel<>();
 
     @UiField
     CellTable cellTable;
+    @UiField
+    Button addButton;
+    @UiField
+    Button deleteButton;
+    @UiField
+    Button updateButton;
+    @UiField
+    Label label;
 
     private TextColumn<CompanyDto> idColumn;
     private TextColumn<CompanyDto> nameColumn;
@@ -29,13 +50,75 @@ public class CompaniesPresenter {
     private TextColumn<CompanyDto> telColumn;
     private TextColumn<CompanyDto> emailColumn;
 
-
     public CompaniesPresenter() {
-
         root = uiBinder.createAndBindUi(this);
+        label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
         initTable();
+        //Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "backend");
+        client.getAllCompanies(new MethodCallback<List<CompanyDto>>() {
+            @Override
+            public void onFailure(Method method, Throwable exception) {
+                Window.alert(exception.toString() + "\n" + exception.getMessage());
+            }
 
+            @Override
+            public void onSuccess(Method method, List<CompanyDto> companyDto) {
+                cellTable.setRowData(companyDto);
+            }
+        });
     }
+
+    @UiHandler("addButton")
+    void addBtn(ClickEvent event) {
+        AddCompanyView addCompanyView = GWT.create(AddCompanyView.class);
+        addCompanyView.setCompaniesPresenter(this);
+    }
+
+    @UiHandler("deleteButton")
+    void deleteDtn(ClickEvent event) {
+        CompanyDto companyDto = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(companyDto != null) {
+            client.deleteCompany(companyDto.getId(), new MethodCallback<Boolean>() {
+                @Override
+                public void onFailure(Method method, Throwable exception) {
+                    Window.alert(exception.toString() + "\n" + exception.getMessage());
+                }
+
+                @Override
+                public void onSuccess(Method method, Boolean aBoolean) {
+                    Window.alert("Deleted");
+                    client.getAllCompanies(new MethodCallback<List<CompanyDto>>() {
+                        @Override
+                        public void onFailure(Method method, Throwable exception) {
+                            Window.alert(exception.toString() + "\n" + exception.getMessage());
+                        }
+                        @Override
+                        public void onSuccess(Method method, List<CompanyDto> companyDto) {
+                            getCellTable().setRowData(companyDto);
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            Window.alert("Please select company");
+        }
+    }
+
+    @UiHandler("updateButton")
+    void updateBtn(ClickEvent event) {
+        CompanyDto companyDto = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
+        if(companyDto != null) {
+            UpdateCompanyView updateCompanyView = GWT.create(UpdateCompanyView.class);
+            updateCompanyView.setCompaniesPresenter(this);
+            updateCompanyView.fillTextFields(companyDto);
+        }
+        else {
+            Window.alert("Select company");
+        }
+    }
+
+
 
     public VerticalPanel getElement() {
         return root;
@@ -45,6 +128,10 @@ public class CompaniesPresenter {
         return cellTable;
     }
 
+    public Button getDeleteButton() {
+        return deleteButton;
+    }
+
     private void initTable() {
         idColumn = new TextColumn<CompanyDto>() {
             @Override
@@ -52,42 +139,36 @@ public class CompaniesPresenter {
                 return Integer.toString(companyDto.getId());
             }
         };
-
         nameColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
                 return companyDto.getCompanyName();
             }
         };
-
         addrColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
                 return companyDto.getAddress();
             }
         };
-
         tinColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
-                return Integer.toString(companyDto.getTin());
+                return Long.toString(companyDto.getTin());
             }
         };
-
         iecColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
-                return Integer.toString(companyDto.getIec());
+                return Long.toString(companyDto.getIec());
             }
         };
-
         telColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
-                return Integer.toString(companyDto.getTelNumber());
+                return Long.toString(companyDto.getTelNumber());
             }
         };
-
         emailColumn = new TextColumn<CompanyDto>() {
             @Override
             public String getValue(CompanyDto companyDto) {
@@ -102,7 +183,19 @@ public class CompaniesPresenter {
         cellTable.addColumn(iecColumn, "IEC");
         cellTable.addColumn(telColumn, "Tel");
         cellTable.addColumn(emailColumn, "Email");
+
+        cellTable.setSelectionModel(selectionModel);
+
+        //Double click handler
+        cellTable.addDomHandler(new DoubleClickHandler() {
+
+            @Override
+            public void onDoubleClick(final DoubleClickEvent event) {
+                CompanyDto selected = ((SingleSelectionModel<CompanyDto>)cellTable.getSelectionModel()).getSelectedObject();
+                if (selected != null) {
+                    new CompanyAccounts(selected.getCompanyName());
+                }
+            }
+        }, DoubleClickEvent.getType());
     }
-
-
 }

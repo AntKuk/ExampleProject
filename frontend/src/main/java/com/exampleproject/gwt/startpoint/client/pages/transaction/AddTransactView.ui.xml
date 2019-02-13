@@ -1,0 +1,22 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <g:DialogBox >
+        <g:HTMLPanel>
+            <g:Label>Seller</g:Label>
+            <g:ListBox ui:field="sellerName"/>
+            <g:Label>Customer</g:Label>
+            <g:ListBox ui:field="customerName"/>
+            <g:Label>Customer Account</g:Label>
+            <g:ListBox ui:field="customerAcc"/>
+            <g:Label>Seller Account</g:Label>
+            <g:ListBox ui:field="sellerAcc"/>
+            <g:Label>Total</g:Label>
+            <g:TextBox ui:field="total"/>
+            <g:Button ui:field="ok">Ok</g:Button>
+            <g:Button ui:field="cancel">Cancel</g:Button>
+        </g:HTMLPanel>
+    </g:DialogBox>
+
+</ui:UiBinder>

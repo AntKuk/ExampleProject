@@ -5,11 +5,25 @@ h1 {
     font-weight: bold;
     text-align: center;
 }
+table {
+    margin: auto;
+    vertical-align: middle;
+}
+td {
+    align-items: center;
+}
 
 body, td, a, div, .p {
     font-family: arial, sans-serif
 }
 
-.gwt-DialogBox {
-     background-color: aqua;
- }
+.gwt-Button {
+    margin: 15px !important;
+}
+
+.gwt-Label {
+    font-size: 35px;
+    padding: 5px;
+    
+}
+

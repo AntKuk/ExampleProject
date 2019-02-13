@@ -5,7 +5,7 @@
 
 
     <g:VerticalPanel>
-        <g:Label>Transactions</g:Label>
+        <g:Label ui:field="label">Transactions</g:Label>
         <g:HorizontalPanel>
             <g:Button ui:field="addButton">Add transaction</g:Button>
             <g:Button ui:field="updateButton">Update transaction</g:Button>

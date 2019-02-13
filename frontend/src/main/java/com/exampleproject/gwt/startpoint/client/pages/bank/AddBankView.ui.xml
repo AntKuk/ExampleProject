@@ -7,7 +7,9 @@
             <g:Label>Bank name</g:Label>
             <g:TextBox ui:field="bankName"/>
             <g:Label>Bank adress</g:Label>
-            <g:TextBox ui:field="bankAdress"/>
+            <g:TextBox ui:field="bankCity"/>
+            <g:Label>BIC</g:Label>
+            <g:TextBox ui:field="bankBic"/>
             <g:Button ui:field="ok">Ok</g:Button>
             <g:Button ui:field="cancel">Cancel</g:Button>
         </g:HTMLPanel>

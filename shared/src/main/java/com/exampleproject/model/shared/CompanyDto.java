@@ -1,20 +1,26 @@
 package com.exampleproject.model.shared;
 
-import java.math.BigInteger;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-public class CompanyDto {
+import java.math.BigInteger;
+//@Component
+//@Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+public class CompanyDto implements BasicDto {
     private int id;
     private String companyName;
     private String address;
-    private int tin;
-    private int iec;
-    private int telNumber;
+    private long tin;
+    private long iec;
+    private long telNumber;
     private String email;
+    //private BankAccDto acc;
 
     public CompanyDto() {
     }
 
-    public CompanyDto(int id, String companyName, String address, int tin, int iec, int telNumber, String email) {
+    public CompanyDto(int id, String companyName, String address, long tin, long iec, long telNumber, String email) {
         this.id = id;
         this.companyName = companyName;
         this.address = address;
@@ -48,27 +54,27 @@ public class CompanyDto {
         this.address = address;
     }
 
-    public int getTin() {
+    public long getTin() {
         return tin;
     }
 
-    public void setTin(int tin) {
+    public void setTin(long tin) {
         this.tin = tin;
     }
 
-    public int getIec() {
+    public long getIec() {
         return iec;
     }
 
-    public void setIec(int iec) {
+    public void setIec(long iec) {
         this.iec = iec;
     }
 
-    public int getTelNumber() {
+    public long getTelNumber() {
         return telNumber;
     }
 
-    public void setTelNumber(int telNumber) {
+    public void setTelNumber(long telNumber) {
         this.telNumber = telNumber;
     }
 

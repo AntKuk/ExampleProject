@@ -1,50 +1,75 @@
 package com.exampleproject.gwt.startpoint.client.pages.main;
 
+import com.exampleproject.gwt.startpoint.client.pages.account.AccountsPresenter;
 import com.exampleproject.gwt.startpoint.client.pages.bank.BanksPresenter;
 import com.exampleproject.gwt.startpoint.client.pages.company.CompaniesPresenter;
+import com.exampleproject.gwt.startpoint.client.handler.MenuBtnHandler;
 import com.exampleproject.gwt.startpoint.client.pages.transaction.TransactionsPresenter;
+import com.exampleproject.gwt.startpoint.client.pages.user.UserPresenter;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 
 public class MainPage {
-    interface MyUiBinder extends UiBinder<HorizontalPanel, MainPage> {}
+    interface MyUiBinder extends UiBinder<VerticalPanel, MainPage> {}
     private static final MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
 
-    private HorizontalPanel root;
+    private VerticalPanel root;
 
     @UiField
     Button companiesBtn;
     @UiField
     Button banksBtn;
     @UiField
+    Button accountsBtn;
+    @UiField
     Button transactionsBtn;
-
+    @UiField
+    Button usersBtn;
     @UiField
     SimplePanel simplePanel;
 
     private CompaniesPresenter companiesPresenter;
     private BanksPresenter banksPresenter;
+    private AccountsPresenter accsPresenter;
     private TransactionsPresenter transactionsPresenter;
+    private UserPresenter userPresenter;
+    private boolean isAdmin = false;
 
     public MainPage() {
         root = uiBinder.createAndBindUi(this);
         companiesPresenter = GWT.create(CompaniesPresenter.class);
         banksPresenter = GWT.create(BanksPresenter.class);
+        accsPresenter = GWT.create(AccountsPresenter.class);
         transactionsPresenter = GWT.create(TransactionsPresenter.class);
+        userPresenter = GWT.create(UserPresenter.class);
         addButtonHandlers();
-
     }
 
+
+    public void loadPagesForRole() {
+        if(!isAdmin) {
+            companiesPresenter.getDeleteButton().removeFromParent();
+            banksPresenter.getDeleteButton().removeFromParent();
+            transactionsPresenter.getDeleteButton().removeFromParent();
+            accsPresenter.getDeleteButton().removeFromParent();
+            usersBtn.removeFromParent();
+        }
+    }
+
+    public void setAdmin(boolean role) {
+        this.isAdmin = role;
+    }
+
+    public boolean isAdmin() {
+        return this.isAdmin;
+    }
     public SimplePanel getSimplePanel() {
         return simplePanel;
     }
 
-    public HorizontalPanel getElement() {
+    public VerticalPanel getElement() {
         return root;
     }
 
@@ -61,38 +86,10 @@ public class MainPage {
     }
 
     private void addButtonHandlers() {
-        //Adding Buttons Handlers
-        banksBtn.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                Widget widget = simplePanel.getWidget();
-                if(widget != null) {
-                    simplePanel.remove(widget);
-                }
-                simplePanel.add(banksPresenter.getElement());
-            }
-        });
-
-        transactionsBtn.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                Widget widget = simplePanel.getWidget();
-                if(widget != null) {
-                    simplePanel.remove(widget);
-                }
-                simplePanel.add(transactionsPresenter.getElement());
-            }
-        });
-
-        companiesBtn.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                Widget widget = simplePanel.getWidget();
-                if(widget != null) {
-                    simplePanel.remove(widget);
-                }
-                simplePanel.add(companiesPresenter.getElement());
-            }
-        });
+        banksBtn.addClickHandler(new MenuBtnHandler(this, banksPresenter));
+        accountsBtn.addClickHandler(new MenuBtnHandler(this, accsPresenter));
+        transactionsBtn.addClickHandler(new MenuBtnHandler(this, transactionsPresenter));
+        companiesBtn.addClickHandler(new MenuBtnHandler(this, companiesPresenter));
+        usersBtn.addClickHandler(new MenuBtnHandler(this, userPresenter));
     }
 }

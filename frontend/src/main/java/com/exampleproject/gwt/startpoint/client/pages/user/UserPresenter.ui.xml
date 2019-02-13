@@ -1,0 +1,18 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:c="urn:import:com.google.gwt.user.cellview.client">
+
+
+    <g:VerticalPanel>
+        <g:Label ui:field="label">Users</g:Label>
+        <g:HorizontalPanel>
+            <g:Button ui:field="addButton">Add user</g:Button>
+            <g:Button ui:field="deleteButton">Delete user</g:Button>
+        </g:HorizontalPanel>
+        <c:CellTable ui:field="cellTable"/>
+    </g:VerticalPanel>
+
+
+
+</ui:UiBinder>

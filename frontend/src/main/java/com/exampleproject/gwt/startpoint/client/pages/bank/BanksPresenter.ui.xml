@@ -4,15 +4,15 @@
              xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 
 
-    <g:VerticalPanel>
-        <g:Label>Banks</g:Label>
-        <g:HorizontalPanel>
-            <g:Button ui:field="addButton">Add bank</g:Button>
-            <g:Button ui:field="updateButton">Update bank</g:Button>
-            <g:Button ui:field="deleteButton">Delete bank</g:Button>
-        </g:HorizontalPanel>
-        <c:CellTable ui:field="cellTable"/>
-    </g:VerticalPanel>
+<g:VerticalPanel>
+    <g:Label ui:field="label">Banks</g:Label>
+    <g:HorizontalPanel>
+        <g:Button ui:field="addButton">Add bank</g:Button>
+        <g:Button ui:field="updateButton">Update bank</g:Button>
+        <g:Button ui:field="deleteButton">Delete bank</g:Button>
+    </g:HorizontalPanel>
+    <c:CellTable ui:field="cellTable"/>
+</g:VerticalPanel>
 
 
 
